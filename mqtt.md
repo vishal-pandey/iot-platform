@@ -56,5 +56,10 @@ keyfile /etc/letsencrypt/live/mqtt.example.com/privkey.pem
 sudo systemctl restart mosquitto
 ```
 
+### Publish Subscribe with SSL
+```
+mosquitto_pub -h iot.softwaremakeinindia.com -t test -m "hello again" -p 8883 --capath /etc/ssl/certs/ -u "uservishal" -P "password"
+mosquitto_sub -h iot.softwaremakeinindia.com -t test -p 8883 --capath /etc/ssl/certs/ -u "uservishal" -P "password"
+```
 
 
