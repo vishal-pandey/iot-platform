@@ -43,7 +43,6 @@ sudo nano /etc/mosquitto/conf.d/default.conf
 ##### default.conf Content
 ```
 ...
-listener 1883 localhost
 
 listener 8883
 certfile /etc/letsencrypt/live/mqtt.example.com/cert.pem
