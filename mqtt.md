@@ -61,4 +61,26 @@ mosquitto_pub -h iot.softwaremakeinindia.com -t test -m "hello again" -p 8883 --
 mosquitto_sub -h iot.softwaremakeinindia.com -t test -p 8883 --capath /etc/ssl/certs/ -u "uservishal" -P "password"
 ```
 
+### MQTT Websocket
+```
+sudo nano /etc/mosquitto/conf.d/default.conf
+```
 
+##### default.conf Content
+```
+...
+
+listener 8083
+protocol websockets
+certfile /etc/letsencrypt/live/iot.softwaremakeinindia.com/cert.pem
+cafile /etc/letsencrypt/live/iot.softwaremakeinindia.com/chain.pem
+keyfile /etc/letsencrypt/live/iot.softwaremakeinindia.com/privkey.pem
+```
+
+### Restart MQTT Server
+```
+sudo service mosquitto restart
+```
+
+##### *note - 
+it may me needed to restart mosquitto twice due to non availablity of port on restarted
