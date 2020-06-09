@@ -11,8 +11,16 @@ class iotAppAdmin(admin.ModelAdmin):
 	def save_model(self, request, obj, form, change):
 		obj.key = uuid.uuid4()
 		obj.owner = request.user
-		obj.username = uuid.uuid4()
-		obj.password = uuid.uuid4()
+
+		username = uuid.uuid4()
+		obj.username = username
+
+		password = uuid.uuid4()
+		obj.password = password
+
+		command = "sudo mosquitto_passwd -b passwd "+username+" "+password+""
+		os.system(command)
+
 		obj.save()
 
 	def get_queryset(self, request):
