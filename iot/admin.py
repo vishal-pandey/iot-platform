@@ -20,6 +20,7 @@ class iotAppAdmin(admin.ModelAdmin):
 
 		command = "sudo mosquitto_passwd -b /etc/mosquitto/passwd "+str(username)+""+" "+str(password)+""
 		os.system(command)
+		os.system("sudo kill -HUP 18371")
 
 		obj.save()
 
