@@ -18,6 +18,5 @@ def index(request):
 			res = {'error': 'Wrong Credentials'}
 			return HttpResponse(json.dumps(res), content_type="application/json")
 	else:
-		context = {}
-		return HttpResponse("Hello")
-		# return render(request, 'website/index.html', context)
+		res = {'error': 'Method Not Supported'}
+		return HttpResponse(json.dumps(res), content_type="application/json")
