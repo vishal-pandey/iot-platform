@@ -18,7 +18,7 @@ class iotAppAdmin(admin.ModelAdmin):
 		password = uuid.uuid4()
 		obj.password = password
 
-		command = "sudo mosquitto_passwd -b passwd "+str(username)+""+" "+str(password)+""
+		command = "sudo mosquitto_passwd -b /etc/mosquitto/passwd "+str(username)+""+" "+str(password)+""
 		os.system(command)
 
 		obj.save()
