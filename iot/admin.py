@@ -5,7 +5,7 @@ import os
 
 class iotAppAdmin(admin.ModelAdmin):
 	model = iotApp
-	list_display = ['name', 'key', 'username', 'password']
+	list_display = ['name', 'key']
 	fieldsets = ((None, {'fields': ('name',)}), )
 
 	def save_model(self, request, obj, form, change):
@@ -27,6 +27,7 @@ class iotAppAdmin(admin.ModelAdmin):
 	def get_queryset(self, request):
 		qs = super(iotAppAdmin, self).get_queryset(request)
 		if request.user.is_superuser:
+			self.list_display = ['name', 'key', 'username', 'password']
 			return qs
 		else:
 			return qs.filter(owner = request.user)
