@@ -1,0 +1,1 @@
+## Website static files folder
