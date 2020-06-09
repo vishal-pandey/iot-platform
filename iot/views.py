@@ -9,9 +9,14 @@ import json
 def index(request):
 	print("Hello")
 	if request.method == 'POST':
-		key =  request.POST.get('key')
-		res = list(iotApp.objects.filter(key=key).values('username', 'password'))[0]
-		return HttpResponse(json.dumps(res), content_type="application/json")
+		try:
+			key =  request.POST.get('key')
+			res = list(iotApp.objects.filter(key=key).values('username', 'password'))[0]
+			return HttpResponse(json.dumps(res), content_type="application/json")
+			
+		except Exception as e:
+			res = {'error': 'Wrong Credentials'}
+			return HttpResponse(json.dumps(res), content_type="application/json")
 	else:
 		context = {}
 		return HttpResponse("Hello")
