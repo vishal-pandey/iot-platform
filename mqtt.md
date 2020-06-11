@@ -82,5 +82,9 @@ keyfile /etc/letsencrypt/live/iot.softwaremakeinindia.com/privkey.pem
 sudo service mosquitto restart
 ```
 
+##### MQTT Websocket Client to check
+https://www.eclipse.org/paho/clients/js/utility/
+
+
 ##### *note - 
 it may me needed to restart mosquitto twice due to non availablity of port on restarted
