@@ -23,7 +23,7 @@ cd ../mosquitto-auth-plug
 cp config.mk.in config.mk
 nano config.mk
 ```
-mosquitto_src =/root/mosquitto-1.4.4/  
+mosquitto_src =/home/ubuntu/mosquitto-1.4.15  
 openssldir =/usr/lib/ssl  
 ```
 sudo make
