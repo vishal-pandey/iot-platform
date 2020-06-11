@@ -86,5 +86,39 @@ sudo service mosquitto restart
 https://www.eclipse.org/paho/clients/js/utility/
 
 
+
+## Final Configuration File
+```
+# Place your local configuration in /etc/mosquitto/conf.d/
+#
+# A full description of the configuration file is at
+# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+
+pid_file /var/run/mosquitto.pid
+
+persistence true
+persistence_location /var/lib/mosquitto/
+
+log_dest file /var/log/mosquitto/mosquitto.log
+
+include_dir /etc/mosquitto/conf.d
+
+password_file /etc/mosquitto/passwd
+allow_anonymous false
+
+listener 8883
+certfile /etc/letsencrypt/live/mqtt.softwaremakeinindia.com/cert.pem
+cafile /etc/letsencrypt/live/mqtt.softwaremakeinindia.com/chain.pem
+keyfile /etc/letsencrypt/live/mqtt.softwaremakeinindia.com/privkey.pem
+
+listener 8083
+protocol websockets
+certfile /etc/letsencrypt/live/mqtt.softwaremakeinindia.com/cert.pem
+cafile /etc/letsencrypt/live/mqtt.softwaremakeinindia.com/chain.pem
+keyfile /etc/letsencrypt/live/mqtt.softwaremakeinindia.com/privkey.pem
+```
+
+
+
 ##### *note - 
 it may me needed to restart mosquitto twice due to non availablity of port on restarted
