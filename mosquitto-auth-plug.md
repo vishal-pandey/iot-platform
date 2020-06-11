@@ -88,3 +88,7 @@ auth_opt_aclquery SELECT topic FROM acls WHERE username = '%s'
 auth_opt_superusers S*
 ```
 
+##### References
+https://topic.alibabacloud.com/a/go-use-mosquitto-auth-plugin-to-authenticate-an-mqtt-client_1_38_31055638.html  
+https://medium.com/@yasithlokuge/securing-mqtt-connection-using-mosquitto-auth-plugin-http-api-eebbee2c108c  
+https://docs.djangoproject.com/en/3.0/topics/auth/passwords/#module-django.contrib.auth.hashers  
