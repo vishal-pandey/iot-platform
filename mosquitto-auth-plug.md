@@ -10,6 +10,7 @@ sudo apt-get install uuid-dev
 sudo apt-get install libssl-dev
 sudo apt-get install openssl
 sudo apt-get install libcurl4-openssl-dev
+sudo apt-get install libmysqlclient-dev
 
 cd mosquitto-1.4.15  
 nano config.mk  
