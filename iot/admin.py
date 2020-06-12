@@ -21,20 +21,22 @@ class iotAppAdmin(admin.ModelAdmin):
 
 	def save_model(self, request, obj, form, change):
 		if not change:
-			obj.key = uuid.uuid4()
+
+			key = uuid.uuid4()
+			obj.key = key
 			obj.owner = request.user
 
 			username = uuid.uuid4()
 			obj.username = username
 
-			self.username = username
+			self.key = key
 
 			password = uuid.uuid4()
 			obj.password = password
 
 			obj.pw = make_password(password)
 		if change:
-			self.username = obj.username
+			self.key = obj.key
 
 		# command = "sudo mosquitto_passwd -b /etc/mosquitto/passwd "+str(username)+""+" "+str(password)+""
 		# os.system(command)
@@ -49,7 +51,7 @@ class iotAppAdmin(admin.ModelAdmin):
 		for f in formset.forms:
 			obj = f.instance
 			# print(obj.name) 
-			obj.topic = str(self.username)+"/"+obj.name+"/#"
+			obj.topic = str(self.key)+"/"+obj.name+"/#"
 			# pprint(getmembers(obj))
 			if str(obj.name) != "":
 				obj.save()
