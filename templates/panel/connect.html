@@ -34,25 +34,25 @@
 	<script type="text/javascript">
 		window.onload = ()=>{
 
-			var username = ""
-			var password = ""
+			var username = "7af95ca3-009a-4cac-bce4-a8ab717ee10c"
+			var password = "f966ceb3-0c3a-4630-a5f5-4095c986e42c"
 
-			// Fetch Username
-			tosend = new FormData();
-			tosend.append('key', '{{key}}')
+			// // Fetch Username
+			// tosend = new FormData();
+			// tosend.append('key', '{{key}}')
 
-			fetch("https://iot.softwaremakeinindia.com/iot/", {
-				method: 'POST',
-				body: tosend
-			})
-			.then(res => res.json())
-			.then((data)=>{
-				console.log(data)
-				name = data['name']
-				username = data['username']
-				password = data['password']
-				document.querySelector(".app-name").innerHTML = data['name']
-			})
+			// fetch("https://iot.softwaremakeinindia.com/iot/", {
+			// 	method: 'POST',
+			// 	body: tosend
+			// })
+			// .then(res => res.json())
+			// .then((data)=>{
+			// 	console.log(data)
+			// 	name = data['name']
+			// 	username = data['username']
+			// 	password = data['password']
+			// 	document.querySelector(".app-name").innerHTML = data['name']
+			// })
 
 			// Connect to mqtt server
 			client = new Paho.MQTT.Client('iot.softwaremakeinindia.com', 8083, "clientId");
@@ -70,9 +70,9 @@
 			function onConnect() {
 			  // Once a connection has been made, make a subscription and send a message.
 			  console.log("onConnect");
-			  client.subscribe("World");
+			  client.subscribe("9b678db8-e1ca-4d9f-8a90-fb907ac70b20/bulb");
 			  message = new Paho.MQTT.Message("Hello");
-			  message.destinationName = "World";
+			  message.destinationName = "9b678db8-e1ca-4d9f-8a90-fb907ac70b20/bulb";
 			  client.send(message);
 			}
 
