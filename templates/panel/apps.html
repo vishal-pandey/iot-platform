@@ -1,0 +1,188 @@
+{% extends "panel/base.html" %}
+{% block body_block %}
+{% load static %}
+<section class="ftco-section" style="min-height: 90vh;">
+	<div class="container">
+		<div class="row mb-12">
+			<h1 style="width: 100%; text-align: center;">Apps and Devices</h1>
+			<table style="width: 100%;" border="1">
+				<tr>
+					<th>Name</th>
+					<th>Secret Key</th>
+					<th>Devices</th>
+					<th>Delete App</th>
+				</tr>
+				{% for app in apps %}
+					<tr>
+						<td>{{app.name}}</td>
+						<td style="width: 40%;">
+							<span class="secret" style="color: grey;">{{app.key}}</span> <span data-clipboard-text="{{app.key}}" class="badge badge-pill badge-success p-2 px-3 secret-copy" style="cursor: pointer;"><i class="ion-ios-copy mr-1"></i></span>
+						</td>
+						<td>
+							{% for topic in app.topics %}
+								<div class="dropdown d-inline-block">
+								  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 5px;">
+								    {{topic.name}}
+								  </button>
+								  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="border: 1px solid lightgrey;">
+								  	<button class="dropdown-item device-copy" data-clipboard-text="{{topic.name}}">Copy</button>
+								  	<form method="post" action="/panel/apps/devices">
+								  		{% csrf_token %}
+								  		<input type="text" name="topic" value="{{topic.topic}}" hidden="true">
+								  		<input type="text" name="type" value="delete-device" hidden="true">
+									    <button class="dropdown-item" type="submit">Delete</button>
+								  		
+								  	</form>
+								  </div>
+								</div>
+
+								<!-- <span class="badge badge-pill badge-info p-2 px-3">{{topic.name}}</span> -->
+							{% endfor %}
+							<button class="btn btn-success" type="button" data-toggle="modal" data-target="#exampleModalCenter_{{app.key}}">Add</button>
+
+							<div class="modal fade" id="exampleModalCenter_{{app.key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLongTitle">Create Device in {{app.name}} app</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							      	<p>
+									      <form method="post" action="/panel/apps/devices" class="add_device_form_{{app.key}}">
+									      	{% csrf_token %}
+									      	<input type="text" name="type" value="add-device" hidden="true">
+									      	<input type="text" name="username" value="{{app.username}}" hidden="true">
+									      	<input type="text" name="key" value="{{app.key}}" hidden="true">
+									      	<br>
+								        	<div class="form-group">
+										        <input type="text" id="deviceid" class="form-control" name="device_id" required>
+										        <label class="form-control-placeholder" for="deviceid">Enter Device Id (can only contain a-zA-Z0-9)</label>
+										      </div>
+										      <!-- add-device-submit-button -->
+									        <input class="btn btn-info submit-button" type="submit" value="Add Device"></input>
+
+										    </form>
+							      	</p>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							        <!-- <button type="button" class="btn btn-info" type="submit">Save changes</button> -->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+						</td>
+						<td>
+							<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteApp_{{app.key}}">Delete</button>
+
+							<div class="modal fade" id="deleteApp_{{app.key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to delete {{app.name}} ?</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							      	<p>
+									      <form method="post" action="/panel/apps/devices" class="delete_app_{{app.key}}" style="width: 100%; text-align: center;">
+									      	{% csrf_token %}
+									      	<input type="text" name="type" value="delete-app" hidden="true">
+									      	<input type="text" name="username" value="{{app.username}}" hidden="true">
+									      	<input type="text" name="key" value="{{app.key}}" hidden="true">
+									      	<br>
+									        <input class="btn btn-danger submit-button" type="submit" value="Delete {{app.name}}"></input>
+
+										    </form>
+							      	</p>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							        <!-- <button type="button" class="btn btn-info" type="submit">Save changes</button> -->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+
+			<button class="btn btn-outline-success btn-lg btn-block" type="button" data-toggle="modal" data-target="#addApp" style="margin-top: 20px;">Create App</button>
+			<div class="modal fade" id="addApp" tabindex="-1" role="dialog" aria-labelledby="addAppTitle" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLongTitle">Create New App</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+				      <form method="post" action="/panel/apps/devices" class="add_app_form">
+				      	{% csrf_token %}
+				      	<input type="text" name="type" value="add-app" hidden="true" hidden="true">
+				      	<br>
+			        	<div class="form-group">
+					        <input type="text" id="deviceid" class="form-control" name="appname" required>
+					        <label class="form-control-placeholder" for="deviceid">Enter Name for your app</label>
+					      </div>
+				        <input class="btn btn-info add-app-submit-button" type="submit" value="Add"></input>
+
+					    </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			        <!-- <button type="button" class="btn btn-info" type="submit">Save changes</button> -->
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</section>
+	
+<style type="text/css">
+	th, td{
+		padding: 10px;
+	}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+<script type="text/javascript">
+	var clipboard = new ClipboardJS('.secret-copy');
+
+	clipboard.on('success', function(e) {
+	    console.info('Action:', e.action);
+	    console.info('Text:', e.text);
+	    console.info('Trigger:', e.trigger);
+
+	    e.clearSelection();
+	});
+
+	clipboard.on('error', function(e) {
+	    console.error('Action:', e.action);
+	    console.error('Trigger:', e.trigger);
+	});
+
+	var clipboard1 = new ClipboardJS('.device-copy');
+
+	clipboard1.on('success', function(e) {
+	    console.info('Action:', e.action);
+	    console.info('Text:', e.text);
+	    console.info('Trigger:', e.trigger);
+
+	    e.clearSelection();
+	});
+
+	clipboard1.on('error', function(e) {
+	    console.error('Action:', e.action);
+	    console.error('Trigger:', e.trigger);
+	});
+
+
+</script>
+{% endblock %}

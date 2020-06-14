@@ -19,22 +19,17 @@ def index(request):
 		return render(request, 'website/index.html', context)
 
 
-def about(request):
-	return render(request, 'website/about.html')
 
-def services(request):
-	return render(request, 'website/services.html')
+def documentation(request):
+	return render(request, 'website/documentation.html')
 
-def contact(request):
-	if request.method == 'POST':
-		name = request.POST['name']
-		subject = request.POST['subject']
-		email = request.POST['email']
-		message = request.POST['message']
-		ContactUs.objects.create(name = name, email = email, subject = subject, message = message)
-		context = {}
-		context['sent'] = True
-		return render(request, 'website/contact.html', context)
 
-	return render(request, 'website/contact.html')
+def pricing(request):	return render(request, 'website/pricing.html')
 
+
+def support(request):
+	return render(request, 'website/support.html')
+
+
+def template(request):
+	return render(request, 'website/template.html')

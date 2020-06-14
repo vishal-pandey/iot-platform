@@ -7,10 +7,14 @@ app_name = 'website'
 urlpatterns=[
     # url(r'',views.index, name='index'),
     path('', views.index, name='home'),
-    path('about', views.about, name='about'),
+    # path('about', views.about, name='about'),
+    path('pricing', views.pricing, name='pricing'),
+    path('documentation', views.documentation, name='documentation'),
+
     # path('services', views.services, name='services'),
     # path('courses', views.courses, name='courses'),
     # path('teacher', views.teacher, name='teacher'),
-    path('contact', views.contact, name='contact'),
+    path('support', views.support, name='support'),
+    path('template', views.template, name='template'),
     # path('privacy', views.ppolicy, name='privacy')
 ]

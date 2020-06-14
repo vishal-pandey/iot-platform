@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Structure - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700&display=swap" rel="stylesheet">
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'panel/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/css/animate.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'panel/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'panel/css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'panel/css/ionicons.min.css' %}">
+		
+		<link rel="stylesheet" href="{% static 'panel/css/bootstrap-datetimepicker.min.css' %}">
+		<link rel="stylesheet" href="{% static 'panel/css/nouislider.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'panel/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/css/style.css' %}">
+  </head>
+  <body>
+		
+  <div class="main-section">
+
+		<!-- <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">Structure.</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	        	<li class="dropdown nav-item">
+              <a href="#" class="dropdown-toggle nav-link icon d-flex align-items-center" data-toggle="dropdown">
+                <i class="ion-ios-apps mr-2"></i>
+                Components
+                <b class="caret"></b>
+              </a>
+              <div class="dropdown-menu dropdown-menu-left">
+                <a href="#" class="dropdown-item"><i class="ion-ios-apps mr-2"></i> All Components</a>
+                <a href="#" class="dropdown-item"><i class="ion-ios-document mr-2"></i> Documentation</a>
+              </div>
+            </li>
+	          <li class="nav-item"><a href="#" class="nav-link icon d-flex align-items-center"><i class="ion-ios-cloud-download mr-2"></i> Download</a></li>
+	          <li class="nav-item cta"><a href="#" class="nav-link icon d-flex align-items-center"><i class="ion-ios-copy mr-2"></i> Premium</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link icon d-flex align-items-center"><i class="ion-logo-facebook"></i><span class="d-lg-none ml-2">Facebook</span></a></li>
+	          <li class="nav-item"><a href="#" class="nav-link icon d-flex align-items-center"><i class="ion-logo-twitter"></i><span class="d-lg-none ml-2">Twitter</span></a></li>
+	          <li class="nav-item"><a href="#" class="nav-link icon d-flex align-items-center"><i class="ion-logo-instagram"></i><span class="d-lg-none ml-2">Instagram</span></a></li>
+	        </ul>
+	      </div>
+		  </div>
+	  </nav> -->
+
+    <div class="px-0 bg-info navbar-wrap">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <nav class="navbar px-0 navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#">IOT Admin</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="oi oi-menu"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExample07">
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'panel-home' %}active{% endif %} d-flex">
+                      <a class="nav-link d-flex align-items-center" href="/panel">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item d-flex {% if request.resolver_match.url_name == 'panel-apps' %}active{% endif %}">
+                      <a href="/panel/apps/" class="nav-link icon d-flex align-items-center"><i class="ion-ios-compass mr-1"></i>Apps</a>
+                    </li>
+                    <li class="nav-item d-flex {% if request.resolver_match.url_name == 'panel-account' %}active{% endif %}">
+                      <a href="/panel/account/" class="nav-link icon d-flex align-items-center"><i class="ion-ios-contact mr-1"></i>Account</a>
+                    </li>
+                    
+                    <li class="nav-item d-flex">
+                      <a href="/panel/logout/" class="nav-link icon d-flex align-items-center">Logout</a>
+                    </li>
+
+                    <!-- <li class="dropdown nav-item d-flex">
+                      <a href="#" class="dropdown-toggle nav-link icon d-flex align-items-center" data-toggle="dropdown">
+                        <i class="ion-ios-settings mr-1"></i>
+                        Settings
+                        <b class="caret"></b>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <h6 class="dropdown-header">Dropdown header</h6>
+                        <a href="#" class="dropdown-item">Action</a>
+                        <a href="#" class="dropdown-item">Another action</a>
+                        <a href="#" class="dropdown-item">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">Separated link</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">One more separated link</a>
+                      </div>
+                    </li> -->
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- END nav -->
+
+
+  	{% block body_block %}
+    {% endblock %}
+		
+
+	  <footer class="ftco-section ftco-section-2">
+	  	<div class="col-md-12 text-center">
+          <p class="mb-0">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>
+              document.write(new Date().getFullYear());
+
+            </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+        </div>
+	  </footer>
+
+  </div>
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="{% static 'panel/js/jquery.min.js' %}"></script>
+  <script src="{% static 'panel/js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'panel/js/popper.min.js' %}"></script>
+  <script src="{% static 'panel/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'panel/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'panel/js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'panel/js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'panel/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'panel/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'panel/js/aos.js' %}"></script>
+
+  <script src="{% static 'panel/js/nouislider.min.js' %}"></script>
+  <script src="{% static 'panel/js/moment-with-locales.min.js' %}"></script>
+  <script src="{% static 'panel/js/bootstrap-datetimepicker.min.js' %}"></script>
+  <script src="{% static 'panel/js/main.js' %}"></script>
+    
+  </body>
+</html>
+
+<style type="text/css">
+  body{
+    /*background-color: black;*/
+  }
+</style>

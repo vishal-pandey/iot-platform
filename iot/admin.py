@@ -48,13 +48,15 @@ class iotAppAdmin(admin.ModelAdmin):
 	def save_formset(self, request, form, formset, change):
 		formset.save()
 		
-		for f in formset.forms:
-			obj = f.instance
-			# print(obj.name) 
-			obj.topic = str(self.key)+"/"+obj.name+"/#"
-			# pprint(getmembers(obj))
-			if str(obj.name) != "":
-				obj.save()
+		if True:
+			for f in formset.forms:
+				obj = f.instance
+				# print(obj.name) 
+				obj.topic = str(self.key)+"/"+obj.name+"/#"
+				print(dir(obj.delete))
+				# pprint(getmembers(obj))
+				if str(obj.name) != "":
+					obj.save()
 
 
 

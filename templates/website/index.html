@@ -1,0 +1,194 @@
+{% extends "website/base.html" %}
+{% block body_block %}
+{% load static %}
+
+<!-- Banner-->
+        <div class="banner main-bg ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="banner-text">
+                            <h1 class="font-weight-bold text-white mb-3">IOT Made Simple</h1>
+                            <p class="text-white mb-4">Build your IOT Devices and Network with simplicity</p>
+                            <a class="button-banner" href="/contact">Signup</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="banner-type">
+                            <img class="img-fluid banner-round wow fadeIn animated bounce slower" src="{% static 'website/images/banner/02.png' %}">
+                            <div class="wow fadeInRight">
+                                <img class="img-fluid banner-person" src="{% static 'website/images/banner/03.png' %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img class="img-fluid banner-after" src="{% static 'website/images/banner/shap.png' %}" alt="image">
+            <div class="content--canvas">
+            </div>
+        </div>
+        <!-- Banner-->
+        <!-- How It Works-->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src="{% static 'website/images/bg/11.jpg' %}" class="img-fluid wow fadeInLeft" alt="">
+                    </div>
+                    <div class="col-lg-6 align-self-center">
+                        <h2 class="mb-3 iq-rmt-30 font-weight-bold">About IOTC</h2>
+                        <p> IOTC is the platform for developing iot device. You focus on the device hardware and software developement. Leave the networking and all heavy lifting of machine to machine communication on us.</p>
+                        <ul class="list-style mt-4">
+                            <li><i class="fas fa-chart-pie blue-color"></i><span class="font-weight-bold text-black">Easy Machine to Machine communication.</span></li>
+                            <li><i class="fas fa-chart-bar blue-color"></i></i><span class="font-weight-bold text-black">Easy Machine to system communication.</span></li>
+                            <li><i class="fas fa-chart-line blue-color"></i><span class="font-weight-bold text-black">SDK available for all major programming language.</span></li>
+                            <li><i class="fas fa-cogs blue-color"></i><span class="font-weight-bold text-black">Web console for management of devices and monitoring.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- How It Works-->
+        <!--=================================
+        MAIN CONTENT -->
+        <div class="main-content">
+            <!-- Easy Pricing Plans-->
+            <section class="easy-pricing-plans gray-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="title-box">
+                                <h2 class="title font-weight-bold">How It Works</h2>
+                                <p class="sub-title">It is super easy to use IOTC for iot communication management.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="easy-box text-center">
+                                <h4 class="mb-3">Sign Up</h4>
+                                <img src="{% static 'website/images/demo/04.jpg' %}" class="img-fluid mb-3" alt="">
+                                <p>Create an account at IOTC (choose a plan based on your requirement)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="easy-box text-center">
+                                <h4 class="mb-3">Create App and Device</h4>
+                                <img src="{% static 'website/images/demo/06.png' %}" class="img-fluid mb-3" alt="">
+                                <p>After signup go to IOTC panel and create App and devices according to need and grab the app secret key and device id from there.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="easy-box text-center">
+                                <h4 class="mb-3">Integrate with your device</h4>
+                                <img src="{% static 'website/images/demo/03.png' %}" class="img-fluid mb-3" alt="">
+                                <p>Integrate the secret and device id with your physical device and software platform you build using sdk provided</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="iq-asked pt-0">
+                <div class="container-fluid pl-0 pr-0">
+                    <div class="row no-gutters row-eq-height">
+                        <div class="col-lg-7 col-sm-12 main-bg">
+                            <div class="iq-frequently">
+                                <h3 class="text-white mb-4 font-weight-bold">Frequently Asked Questions</h3>
+                                <div class="iq-accordion">
+                                    <div class="iq-ad-block ad-active">
+                                        <a href="javascript:void(0)" class="ad-title">What is IOTC</a>
+                                        <div class="ad-details">
+                                            <p>IOTC is an iot networking platform which you can use to connect your physical device to another physical device or user interface you have built for your customers.</p>
+                                        </div>
+                                    </div>
+                                    <div class="iq-ad-block">
+                                        <a href="javascript:void(0)" class="ad-title">How to use IOTC</a>
+                                        <div class="ad-details">
+                                            <p>Create an account on IOTC go to Panel create app and devices. Use the created credentials to communicate with the devices with the help of SDK provided.</p>
+                                        </div>
+                                    </div>
+                                    <div class="iq-ad-block">
+                                        <a href="javascript:void(0)" class="ad-title">Can I use IOTC for commercial projects</a>
+                                        <div class="ad-details">
+                                            <p>Yes IOTC can be easily integrated and scaled for the commercial IOT projects.</p>
+                                        </div>
+                                    </div>
+                                    <div class="iq-ad-block">
+                                        <a href="javascript:void(0)" class="ad-title">How to get support?</a>
+                                        <div class="ad-details">
+                                            <p>Got the support page from menu raise a ticket we will then connect with you and resolve all your problems.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-12 pink-bg mt-5 text-center">
+                            <div class="iq-asked-img position-relative;">
+                                <img class="img-fluid wow fadeIn animated bounce slower" src="{% static 'website/images/device/02.png' %}" alt="drive10">
+                            </div>
+                            <div class="play-video wow rotateIn">
+                                <a href="{% static 'website/video/02.mp4' %}" class="iq-video popup-youtube"><i class="ion-play"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Frequently End-->
+            
+            <!--=================================
+            Clients -->
+            <section class="iq-clients pt-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="title-box mb-4">
+                                <h2 class="title font-weight-bold">IOTC Supported Languages and platforms</h2>
+                                <p class="sub-title">We support all the major language and platforms</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="6" data-items-laptop="5" data-items-tab="4" data-items-mobile="3" data-items-mobile-sm="2">
+                                <div class="item ml-3 mr-3 mb-4 mt-3">
+                                    <div class="clients-box">
+                                        <img class="img-fluid client-img" src="{% static 'website/images/clients/clients-img1.png' %}" alt="image" data-toggle="tooltip" title="HTML">
+                                    </div>
+                                </div>
+                                <div class="item ml-3 mr-3 mb-4 mt-3">
+                                    <div class="clients-box">
+                                        <img class="img-fluid client-img" src="{% static 'website/images/clients/clients-img2.png' %}" alt="image" data-toggle="tooltip" title="Wordpress">
+                                    </div>
+                                </div>
+                                <div class="item ml-3 mr-3 mb-4 mt-3">
+                                    <div class="clients-box">
+                                        <img class="img-fluid client-img" src="{% static 'website/images/clients/clients-img3.png' %}" alt="image" data-toggle="tooltip" title="Shopify">
+                                    </div>
+                                </div>
+                                <div class="item ml-3 mr-3 mb-4 mt-3">
+                                    <div class="clients-box">
+                                        <img class="img-fluid client-img" src="{% static 'website/images/clients/clients-img4.png' %}" alt="image" data-toggle="tooltip" title="CSS">
+                                    </div>
+                                </div>
+                                <div class="item ml-3 mr-3 mb-4 mt-3">
+                                    <div class="clients-box">
+                                        <img class="img-fluid client-img" src="{% static 'website/images/clients/clients-img5.png' %}" alt="image" data-toggle="tooltip" title="jQuery">
+                                    </div>
+                                </div>
+                                <div class="item ml-3 mr-3 mb-4 mt-3">
+                                    <div class="clients-box">
+                                        <img class="img-fluid client-img" src="{% static 'website/images/clients/clients-img6.png' %}" alt="image" data-toggle="tooltip" title="Bootstrap">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!--=================================
+        MAIN CONTENT -->
+        <!--=================================
+        Clients -->
+
+{% endblock %}
