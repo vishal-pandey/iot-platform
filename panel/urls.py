@@ -13,4 +13,6 @@ urlpatterns=[
     path('apps/devices', views.devices, name='panel-devices'),
     path('account/', views.account, name='panel-account'),
     path('logout/', views.userlogout, name='panel-logout'),
+    path('connect/', views.deviceConnect, name='panel-device-connect'),
+
 ]

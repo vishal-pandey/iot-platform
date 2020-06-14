@@ -58,7 +58,7 @@
 									      	<input type="text" name="key" value="{{app.key}}" hidden="true">
 									      	<br>
 								        	<div class="form-group">
-										        <input type="text" id="deviceid" class="form-control" name="device_id" required>
+										        <input type="text" id="deviceid" class="form-control device_add_input" name="device_id" required>
 										        <label class="form-control-placeholder" for="deviceid">Enter Device Id (can only contain a-zA-Z0-9)</label>
 										      </div>
 										      <!-- add-device-submit-button -->
@@ -182,6 +182,22 @@
 	    console.error('Action:', e.action);
 	    console.error('Trigger:', e.trigger);
 	});
+
+	window.onload = ()=>{
+		console.log("Hello")
+		elements = document.querySelectorAll(".device_add_input")
+
+		for (el of elements){
+			el.onkeyup = (e)=>{
+				console.log(e.srcElement.value)
+				e.srcElement.value = e.srcElement.value.replace(/[^A-Z0-9]/ig, "");
+			}
+		}
+
+		// document.querySelector(".device_add_input").onkeyup = (e)=>{
+		// 	console.log(e)
+		// }
+	}
 
 
 </script>

@@ -7,11 +7,12 @@ import json
 
 @csrf_exempt
 def index(request):
-	print("Hello")
 	if request.method == 'POST':
 		try:
 			key =  request.POST.get('key')
-			res = list(iotApp.objects.filter(key=key).values('username', 'password'))[0]
+			print(request.headers)
+			print(request.POST)
+			res = list(iotApp.objects.filter(key=key).values('username', 'password', 'name'))[0]
 			return HttpResponse(json.dumps(res), content_type="application/json")
 			
 		except Exception as e:

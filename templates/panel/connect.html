@@ -1,0 +1,97 @@
+{% extends "panel/base.html" %}
+{% block body_block %}
+{% load static %}
+<section class="ftco-section" style="min-height: 90vh;">
+	<div class="container">
+		<div class="row mb-12">
+			<h1 style="width: 100%; text-align: center;">Device Connect</h1>
+			{% if key %}
+				<div class="col-sm-12" style="text-align: center;">
+					<b>APP : </b><h2 class="app-name"></h2>
+				</div>
+			{% else %}
+				<div class="col-sm-6" style="text-align: center; margin-left: auto; margin-right: auto;">
+					<form method="POST" accept="/panel/connect/">
+						{% csrf_token %}
+						<div class="form-group has-default">
+				            <input type="text" class="form-control" placeholder="app secret key" name="key">
+			            </div>
+			            <button class="btn btn-success" type="submit">Connect</button>
+					</form>
+				</div>
+			{% endif %}
+
+
+		</div>
+	</div>
+</section>
+
+
+{% if key %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+
+	
+	<script type="text/javascript">
+		window.onload = ()=>{
+
+			var username = ""
+			var password = ""
+
+			// Fetch Username
+			tosend = new FormData();
+			tosend.append('key', '{{key}}')
+
+			fetch("https://iot.softwaremakeinindia.com/iot/", {
+				method: 'POST',
+				body: tosend
+			})
+			.then(res => res.json())
+			.then((data)=>{
+				console.log(data)
+				name = data['name']
+				username = data['username']
+				password = data['password']
+				document.querySelector(".app-name").innerHTML = data['name']
+			})
+
+			// Connect to mqtt server
+			client = new Paho.MQTT.Client('iot.softwaremakeinindia.com', 8083, "clientId");
+			console.log(client)
+
+						// set callback handlers
+			client.onConnectionLost = onConnectionLost;
+			client.onMessageArrived = onMessageArrived;
+
+			// connect the client
+			client.connect({onSuccess:onConnect, userName: username, password: password, useSSL: true});
+
+
+			// called when the client connects
+			function onConnect() {
+			  // Once a connection has been made, make a subscription and send a message.
+			  console.log("onConnect");
+			  client.subscribe("World");
+			  message = new Paho.MQTT.Message("Hello");
+			  message.destinationName = "World";
+			  client.send(message);
+			}
+
+			// called when the client loses its connection
+			function onConnectionLost(responseObject) {
+			  if (responseObject.errorCode !== 0) {
+			    console.log("onConnectionLost:"+responseObject.errorMessage);
+			  }
+			}
+
+			// called when a message arrives
+			function onMessageArrived(message) {
+			  console.log("onMessageArrived:"+message.payloadString);
+			}
+
+		}
+	</script>
+{% endif %}
+
+{% endblock %}
+
+

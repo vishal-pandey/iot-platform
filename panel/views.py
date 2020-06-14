@@ -117,6 +117,16 @@ def account(request):
 
 
 
+
+def deviceConnect(request):
+	context = {}
+	if request.method == 'POST':
+		key = request.POST['key']
+		context['key'] = key
+	return render(request, 'panel/connect.html', context)
+
+
+
 def userlogout(request):
 	if request.user.is_authenticated:
 		logout(request)
