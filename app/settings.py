@@ -86,8 +86,21 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '12345@ASDfg',
         'HOST': '127.0.0.1',
+        'PORT': 3306
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'iotmqtt',
+#         'USER': 'root',
+#         'PASSWORD': 'password',
+#         'HOST': '18.221.22.148',
+#         'PORT': 3306
+#     }
+# }
 
 
 

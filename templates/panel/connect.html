@@ -6,8 +6,36 @@
 		<div class="row mb-12">
 			<h1 style="width: 100%; text-align: center;">Device Connect</h1>
 			{% if key %}
-				<div class="col-sm-12" style="text-align: center;">
+				<div class="col-sm-12 app-name-container" style="text-align: center; display: none; border: 1px solid black;">
 					<b>APP : </b><h2 class="app-name"></h2>
+					<a href="/panel/connect/" class="btn btn-warning retry-key" style="display: none;">Re Enter APP Key</a>
+				</div>
+				<div class="col-sm-12 loading">
+					<h3 style="text-align: center;">Loading ...</h3>
+				</div>
+				<div class="col-sm-12 connection" style="display: none;">
+					<div class="row">
+						<div class="recieving col-sm-6">
+							<table style="width: 100%;" border="1" class="record-table">
+								<tr>
+									<th>Device</th>
+									<th>Data</th>
+									<th>Time</th>
+								</tr>
+							</table>
+						</div>
+						<div class="sending col-sm-6">
+							<div class="form-group has-default">
+					            <label for="devices-available">Select device:</label>
+							    <select class="form-control" class="devices-available" id="devices-available">
+							    </select>
+				            </div>
+				            <div class="form-group has-default">
+				              	<input type="text" class="form-control" id="message" placeholder="Message" name="message">
+				            </div>
+				            <button class="btn btn-success send-message">Send</button>
+						</div>
+					</div>
 				</div>
 			{% else %}
 				<div class="col-sm-6" style="text-align: center; margin-left: auto; margin-right: auto;">
@@ -34,63 +62,136 @@
 	<script type="text/javascript">
 		window.onload = ()=>{
 
-			var username = "7af95ca3-009a-4cac-bce4-a8ab717ee10c"
-			var password = "f966ceb3-0c3a-4630-a5f5-4095c986e42c"
+			var username = ""
+			var password = ""
+			var key = '{{key}}'
+			var devices = []
 
-			// // Fetch Username
-			// tosend = new FormData();
-			// tosend.append('key', '{{key}}')
+			// Fetch Username
+			tosend = new FormData();
+			tosend.append('key', '{{key}}')
 
-			// fetch("https://iot.softwaremakeinindia.com/iot/", {
-			// 	method: 'POST',
-			// 	body: tosend
-			// })
-			// .then(res => res.json())
-			// .then((data)=>{
-			// 	console.log(data)
-			// 	name = data['name']
-			// 	username = data['username']
-			// 	password = data['password']
-			// 	document.querySelector(".app-name").innerHTML = data['name']
-			// })
+			fetch("http://127.0.0.1:8000/iot/", {
+				method: 'POST',
+				body: tosend
+			})
+			.then(res => res.json())
+			.then((data)=>{
+				// console.log(data)
+				name = data['name']
+				username = data['username']
+				password = data['password']
+				devices = data['devices']
 
-			// Connect to mqtt server
-			client = new Paho.MQTT.Client('iot.softwaremakeinindia.com', 8083, "clientId");
-			console.log(client)
+				console.log(username)
+				console.log(password)
+				console.log(key)
+				var select = document.querySelector("#devices-available")
 
-						// set callback handlers
-			client.onConnectionLost = onConnectionLost;
-			client.onMessageArrived = onMessageArrived;
+				for(var device of devices){
+					// console.log(device.name)
+					var option = document.createElement("option")
+					option.text = device.name
+					select.add(option)
+				}
 
-			// connect the client
-			client.connect({onSuccess:onConnect, userName: username, password: password, useSSL: true});
+
+				if (name != 'undefined') {
+
+					document.querySelector(".app-name-container").style = "display:block; width: 100%; text-align: center;"
+					document.querySelector(".connection").style = "display:block;"
+					document.querySelector(".loading").style = "display:none;"
+					document.querySelector(".app-name").innerHTML = data['name']
+
+
+					
+					// Connect to mqtt server
+					client = new Paho.MQTT.Client('iot.softwaremakeinindia.com', 8083, "clientId");
+					// console.log(client)
+
+								// set callback handlers
+					client.onConnectionLost = onConnectionLost;
+					client.onMessageArrived = onMessageArrived;
+
+					// connect the client
+					client.connect({onSuccess:onConnect, userName: username, password: password, useSSL: true});
+				}
+				else{
+					document.querySelector(".app-name-container").style = "display:block; width: 100%; text-align: center;"
+					document.querySelector(".loading").style = "display:none;"
+					document.querySelector(".connection").style = "display:block;"
+					document.querySelector(".app-name").innerHTML = "Key Is not correct"
+					document.querySelector(".retry-key").style = "display:initial;"
+
+				}
+			})
+
 
 
 			// called when the client connects
 			function onConnect() {
 			  // Once a connection has been made, make a subscription and send a message.
-			  console.log("onConnect");
-			  client.subscribe("9b678db8-e1ca-4d9f-8a90-fb907ac70b20/bulb");
-			  message = new Paho.MQTT.Message("Hello");
-			  message.destinationName = "9b678db8-e1ca-4d9f-8a90-fb907ac70b20/bulb";
-			  client.send(message);
+			  // console.log("onConnect");
+
+			  for(var device of devices){
+					// console.log(device.name)
+					client.subscribe(key+"/"+device.name);
+				}
 			}
 
 			// called when the client loses its connection
 			function onConnectionLost(responseObject) {
 			  if (responseObject.errorCode !== 0) {
-			    console.log("onConnectionLost:"+responseObject.errorMessage);
+			    // console.log("onConnectionLost:"+responseObject.errorMessage);
 			  }
 			}
 
 			// called when a message arrives
 			function onMessageArrived(message) {
-			  console.log("onMessageArrived:"+message.payloadString);
+			  // console.log("onMessageArrived:"+message.payloadString);
+			  rcvddata = message.payloadString
+			  device = message.destinationName.split("/")[1]
+			  // console.log(rcvddata)
+			  // console.log(device)
+			  
+			  var tb = document.querySelector("table")
+			  row = tb.insertRow()
+			  var currentdate = new Date(); 
+			  row.insertCell(0).innerHTML = device
+			  row.insertCell(1).innerHTML = rcvddata
+			  row.insertCell(2).innerHTML = currentdate.getHours()+":"+currentdate.getMinutes()+":"+currentdate.getSeconds()
+			}
+
+			function send(){
+				var select = document.querySelector("#devices-available")
+				device = select.options[select.selectedIndex].text
+				topic = key+"/"+device
+				msg = document.querySelector("#message").value
+
+				message = new Paho.MQTT.Message(msg);
+				message.destinationName = topic;
+				client.send(message);
+
+			}
+
+			document.querySelector(".send-message").onclick = ()=>{
+				// console.log("Sending...")
+				send()
 			}
 
 		}
 	</script>
 {% endif %}
+
+
+<style type="text/css">
+	.recieving table tr th, .recieving table tr td{
+		text-align: center;
+	}
+	.connection{
+		margin-top: 60px;
+	}
+</style>
 
 {% endblock %}
 

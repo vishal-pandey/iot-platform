@@ -10,18 +10,18 @@
 					<th>Name</th>
 					<th>Secret Key</th>
 					<th>Devices</th>
-					<th>Delete App</th>
+					<th>Actions</th>
 				</tr>
 				{% for app in apps %}
 					<tr>
-						<td>{{app.name}}</td>
+						<td style="text-align: center;">{{app.name}}</td>
 						<td style="width: 40%;">
 							<span class="secret" style="color: grey;">{{app.key}}</span> <span data-clipboard-text="{{app.key}}" class="badge badge-pill badge-success p-2 px-3 secret-copy" style="cursor: pointer;"><i class="ion-ios-copy mr-1"></i></span>
 						</td>
 						<td>
 							{% for topic in app.topics %}
 								<div class="dropdown d-inline-block">
-								  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 5px;">
+								  <button class="btn btn-info dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 5px;">
 								    {{topic.name}}
 								  </button>
 								  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="border: 1px solid lightgrey;">
@@ -38,7 +38,7 @@
 
 								<!-- <span class="badge badge-pill badge-info p-2 px-3">{{topic.name}}</span> -->
 							{% endfor %}
-							<button class="btn btn-success" type="button" data-toggle="modal" data-target="#exampleModalCenter_{{app.key}}">Add</button>
+							<button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#exampleModalCenter_{{app.key}}">Add</button>
 
 							<div class="modal fade" id="exampleModalCenter_{{app.key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
 							  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -57,9 +57,8 @@
 									      	<input type="text" name="username" value="{{app.username}}" hidden="true">
 									      	<input type="text" name="key" value="{{app.key}}" hidden="true">
 									      	<br>
-								        	<div class="form-group">
-										        <input type="text" id="deviceid" class="form-control device_add_input" name="device_id" required>
-										        <label class="form-control-placeholder" for="deviceid">Enter Device Id (can only contain a-zA-Z0-9)</label>
+								        	<div class="form-group has-default">
+										        <input type="text" id="deviceid" class="form-control device_add_input" name="device_id" required placeholder="Enter Device Id (can only contain a-zA-Z0-9)">
 										      </div>
 										      <!-- add-device-submit-button -->
 									        <input class="btn btn-info submit-button" type="submit" value="Add Device"></input>
@@ -76,7 +75,7 @@
 							</div>
 						</td>
 						<td>
-							<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteApp_{{app.key}}">Delete</button>
+							<button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#deleteApp_{{app.key}}">Delete</button>
 
 							<div class="modal fade" id="deleteApp_{{app.key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
 							  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -107,6 +106,14 @@
 							    </div>
 							  </div>
 							</div>
+
+							<form method="post" action="/panel/connect/" style="display: inline;">
+						  		{% csrf_token %}
+						  		<input type="text" name="key" value="{{app.key}}" hidden="true">
+							    <button class="btn btn-info btn-sm" type="submit">Connect</button>
+						  		
+						  	</form>
+
 						</td>
 					</tr>
 				{% endfor %}
@@ -127,9 +134,8 @@
 				      	{% csrf_token %}
 				      	<input type="text" name="type" value="add-app" hidden="true" hidden="true">
 				      	<br>
-			        	<div class="form-group">
-					        <input type="text" id="deviceid" class="form-control" name="appname" required>
-					        <label class="form-control-placeholder" for="deviceid">Enter Name for your app</label>
+			        	<div class="form-group has-default">
+					        <input type="text" id="deviceid" class="form-control" name="appname" required placeholder="Enter Name for your app">
 					      </div>
 				        <input class="btn btn-info add-app-submit-button" type="submit" value="Add"></input>
 
@@ -189,7 +195,6 @@
 
 		for (el of elements){
 			el.onkeyup = (e)=>{
-				console.log(e.srcElement.value)
 				e.srcElement.value = e.srcElement.value.replace(/[^A-Z0-9]/ig, "");
 			}
 		}
