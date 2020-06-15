@@ -71,7 +71,10 @@
 			tosend = new FormData();
 			tosend.append('key', '{{key}}')
 
-			fetch("http://127.0.0.1:8000/iot/", {
+			apiEndPoint = 'https://iot.softwaremakeinindia.com/iot/'
+			// apiEndPoint = 'http://127.0.0.1:8000/iot/'
+
+			fetch(apiEndPoint, {
 				method: 'POST',
 				body: tosend
 			})
