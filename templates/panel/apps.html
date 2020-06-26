@@ -16,7 +16,35 @@
 					<tr>
 						<td style="text-align: center;">{{app.name}}</td>
 						<td style="width: 40%;">
-							<span class="secret" style="color: grey;">{{app.key}}</span> <span data-clipboard-text="{{app.key}}" class="badge badge-pill badge-success p-2 px-3 secret-copy" style="cursor: pointer;"><i class="ion-ios-copy mr-1"></i></span>
+							<span class="secret" style="color: grey;">{{app.key}}</span> <span data-clipboard-text="{{app.key}}" class="badge badge-pill badge-success p-2 px-3 secret-copy" style="cursor: pointer;"><i class="ion-ios-copy mr-1" style="font-size: 16px;"></i></span>
+							<span class="badge badge-pill badge-success p-2 px-3 secret-scan" style="cursor: pointer;" data-toggle="modal" data-target="#key_scan_modal{{app.key}}"><i class="ion-ios-barcode mr-1" style="font-size: 16px;"></i></span>
+
+							<div class="modal fade" id="key_scan_modal{{app.key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLongTitle">Scan App Key</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" style="display: flex; align-items: center; justify-content: center;">
+								    	<div id="qrcode{{app.key}}"></div>
+										<script type="text/javascript">
+											
+											console.log("hello");
+											new QRCode(document.getElementById("qrcode{{app.key}}"), "{{app.key}}");
+											
+										</script>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+
+
 						</td>
 						<td>
 							{% for topic in app.topics %}
@@ -110,7 +138,7 @@
 							<form method="post" action="/panel/connect/" style="display: inline;">
 						  		{% csrf_token %}
 						  		<input type="text" name="key" value="{{app.key}}" hidden="true">
-							    <button class="btn btn-info btn-sm" type="submit">Connect</button>
+							    <button class="btn btn-info btn-sm" type="submit" style="margin-top: 5px;">Connect</button>
 						  		
 						  	</form>
 

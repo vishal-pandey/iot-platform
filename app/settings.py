@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'iotmqtt',
+        'NAME': 'mqtt',
         'USER': 'root',
-        'PASSWORD': '12345@ASDfg',
+        'PASSWORD': '12345',
         'HOST': '127.0.0.1',
         'PORT': 3306
     }
@@ -96,8 +96,8 @@ DATABASES = {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'iotmqtt',
 #         'USER': 'root',
-#         'PASSWORD': 'password',
-#         'HOST': '18.221.22.148',
+#         'PASSWORD': '12345@ASDfg',
+#         'HOST': '127.0.0.1',
 #         'PORT': 3306
 #     }
 # }
