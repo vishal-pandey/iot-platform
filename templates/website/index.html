@@ -10,7 +10,12 @@
                         <div class="banner-text">
                             <h1 class="font-weight-bold text-white mb-3">IOT Made Simple</h1>
                             <p class="text-white mb-4">Build your IOT Devices and Network with simplicity</p>
-                            <a class="button-banner" href="/contact">Signup</a>
+                            {% if request.user.is_authenticated %}
+                                <a class="button-banner" href="/panel">Go to Console</a>
+                            {% else %}
+                                <a class="button-banner" href="/panel">Signup</a>
+                            {% endif %}
+
                         </div>
                     </div>
                     <div class="col-lg-6">

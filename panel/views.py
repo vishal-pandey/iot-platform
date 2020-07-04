@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from website.models import Subscribe, ContactUs
 from django.urls import reverse
-from iot.models import iotApp, device
+from iot.models import iotApp, device, plan
 
 
 from django.contrib.auth import authenticate, login as userlogin, logout
@@ -12,11 +12,14 @@ from django.contrib import messages
 from django.contrib.auth.models import User, Group
 import json
 from django.conf import settings
+import stripe 
+stripe.api_key = settings.STRIPE_SECRET_KEY
 from django.views.decorators.csrf import csrf_exempt
 import uuid
 from django.contrib.auth.hashers import make_password
-
-
+import datetime
+from datetime import date, timedelta
+import calendar
 
 
 
@@ -42,20 +45,73 @@ def signup(request):
 
 
 def apps(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
 	context = {}
 	apps = list(iotApp.objects.filter(owner=request.user).values('name', 'key', 'username'))
+	context['appcount'] = len(apps)
+	devicecount = 0
 	for app in apps:
 		username = app['username']
 		topics = list(device.objects.filter(username = username).values('name','topic'))
+		devicecount += len(topics)
 		app['topics'] = topics
 	context['apps'] = apps
+	
+	context['devicecount'] = devicecount
+	plan = list(request.user.groups.all().values('name'))[0]['name']
+
+	maxapp = 0
+	maxdevice = 0
+
+	if plan == 'user':
+		maxapp = 2
+		maxdevice = 4
+	elif plan == 'basic':
+		maxapp = 5
+		maxdevice = 25
+	elif plan == 'ultimate':
+		maxapp = 20
+		maxdevice = 20
+
+	context['maxapp'] = maxapp
+	context['maxdevice'] = maxdevice
 
 	return render(request, 'panel/apps.html', context)
 
 
 
 def devices(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
 	context = {}
+
+	apps = list(iotApp.objects.filter(owner=request.user).values('name', 'key', 'username'))
+	appcount = len(apps)
+	devicecount = 0
+	for app in apps:
+		username = app['username']
+		topics = list(device.objects.filter(username = username).values('name','topic'))
+		devicecount += len(topics)
+	
+	plan = list(request.user.groups.all().values('name'))[0]['name']
+
+	maxapp = 0
+	maxdevice = 0
+
+	if plan == 'user':
+		maxapp = 2
+		maxdevice = 4
+	elif plan == 'basic':
+		maxapp = 5
+		maxdevice = 25
+	elif plan == 'ultimate':
+		maxapp = 20
+		maxdevice = 200
+
+
+
+
 	if request.method == 'POST':
 		form_type = request.POST['type']
 		if form_type == 'delete-device':
@@ -69,7 +125,11 @@ def devices(request):
 			username = iotApp.objects.get(username = username)
 			key = request.POST['key']
 			topic = key+"/"+name+"/#"
-			device.objects.create(username=username, name=name, topic=topic)
+			if maxdevice >= devicecount:
+				device.objects.create(username=username, name=name, topic=topic)
+			else:
+				context['error'] = "Device Limit Reached"
+				
 			return HttpResponseRedirect('/panel/apps/')
 
 		if form_type == 'add-app':
@@ -79,7 +139,11 @@ def devices(request):
 			username = uuid.uuid4()
 			password = uuid.uuid4()
 			pw = make_password(password)
-			iotApp.objects.create(name=appname, key=key, username=username, password=password, pw=pw, owner=owner)
+			if maxapp >= appcount:
+				iotApp.objects.create(name=appname, key=key, username=username, password=password, pw=pw, owner=owner)
+			else:
+				context['error'] = "App Limit Reached"
+
 			return HttpResponseRedirect('/panel/apps/')
 
 		if form_type == 'delete-app':
@@ -96,6 +160,8 @@ def devices(request):
 
 
 def account(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
 	context = {}
 	if request.method == 'POST':
 		form_type = request.POST['type']
@@ -119,6 +185,8 @@ def account(request):
 
 
 def deviceConnect(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
 	context = {}
 	if request.method == 'POST':
 		key = request.POST['key']
@@ -132,6 +200,55 @@ def userlogout(request):
 		logout(request)
 		
 	return HttpResponseRedirect('/panel')
+
+
+def selectPlan(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
+	context = {}
+	userplan = list(plan.objects.filter(owner = request.user).values('name',))[0]['name']
+	context['plan'] = userplan
+	return render(request, 'panel/select-plan.html', context)
+
+def pay(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
+	elif request.method == 'POST':
+		context = {}
+		planName = request.POST['plan-name']
+		planDuration = request.POST['plan-duration']
+		price = request.POST['price']
+		
+		context['planName'] = planName
+		context['planDuration'] = planDuration
+		context['price'] = price
+
+		context['key'] = settings.STRIPE_PUBLISHABLE_KEY 
+
+		durationInMonth = 0
+
+		if planDuration == '1m':
+			durationInMonth = 1
+		elif planDuration == '3m':
+			durationInMonth = 3
+		elif planDuration == '6m':
+			durationInMonth = 6
+		elif planDuration =='1y':
+			durationInMonth = 12
+
+		intent = stripe.PaymentIntent.create(
+			amount=int(price)*100,
+			currency='usd',
+			description=planName,
+			metadata = {
+				'user': request.user,
+				'plan': planName,
+				'duration': durationInMonth
+			}
+		)
+
+		context['clientSecret'] = intent.client_secret
+		return render(request, 'panel/pay.html', context)
 
 
 def signuplogin(request):
@@ -183,6 +300,7 @@ def signuplogin(request):
 				user.groups.add(group)
 				user.is_staff = True
 				user.save()
+				plan.objects.create(name="user", owner=user)
 				userlogin(request, user)
 				return HttpResponseRedirect(redir)
 
@@ -195,4 +313,70 @@ def signuplogin(request):
 			return HttpResponseRedirect(reverse('panel:panel-home'))
 		else:
 			return render(request, 'website/signuplogin.html', {'next': redir})
+
+
+
+
+
+
+@csrf_exempt
+def webhook(request):
+  payload = request.body
+  event = None
+
+  try:
+    event = stripe.Event.construct_from(
+      json.loads(payload), stripe.api_key
+    )
+  except ValueError as e:
+    # Invalid payload
+    return HttpResponse(status=400)
+
+  # Handle the event
+  if event.type == 'payment_intent.succeeded':
+    payment_intent = event.data.object # contains a stripe.PaymentIntent
+    # Then define and call a method to handle the successful payment intent.
+    # handle_payment_intent_succeeded(payment_intent)
+
+    user = payment_intent.charges.data[0].metadata.user
+    duration = payment_intent.charges.data[0].metadata.duration
+    userplan = payment_intent.charges.data[0].metadata.plan
+
+    w_user = User.objects.get(username = user)
+
+
+    start_date = datetime.datetime.now()
+    days_in_month = calendar.monthrange(start_date.year, start_date.month)[int(duration)]
+    end_date = start_date + timedelta(days=days_in_month)
+
+    plan.objects.filter(owner = w_user).delete()
+    plan.objects.create(owner = w_user, expiry=end_date, name=userplan)
+
+
+    group = Group.objects.get(name=userplan)
+    w_user.groups.clear()
+    w_user.groups.add(group)
+
+
+    # student = Student.objects.get(userid = w_user)
+    # course = Course.objects.get(id = course)
+
+    # Student_Course.objects.create(student_id = student, course = course)
+
+  elif event.type == 'payment_method.attached':
+    payment_method = event.data.object # contains a stripe.PaymentMethod
+    # Then define and call a method to handle the successful attachment of a PaymentMethod.
+    # handle_payment_method_attached(payment_method)
+  # ... handle other event types
+  else:
+    # Unexpected event type
+    return HttpResponse(status=400)
+
+  return HttpResponse(status=200)
+
+
+
+
+
+
 

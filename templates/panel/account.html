@@ -32,6 +32,20 @@
 						<td>{{request.user.email}}</td>
 					</tr>
 					<tr>
+						<th>Plan</th>
+						<td>
+							{% if user.groups.all.0.name == "user" %}
+								FREE &nbsp;&nbsp;&nbsp;<button class="btn btn-success btn-sm" onclick="window.location.href='/panel/select-plan'">Upgrade</button>
+							{% elif user.groups.all.0.name == "basic" %}
+								BASIC &nbsp;&nbsp;&nbsp;<button class="btn btn-success btn-sm" onclick="window.location.href='/panel/select-plan'">Upgrade</button>
+							{% elif user.groups.all.0.name == "ultimate" %}
+								ULTIMATE
+							{% endif %}
+							
+						</td>
+					</tr>
+
+					<tr>
 						<th>Password</th>
 						<td>
 							<form style="margin-top: 20px;" method="post" action="/panel/account/">
@@ -43,7 +57,7 @@
 					            <div class="form-group has-default">
 					            	<input type="password" class="form-control" placeholder="Repeat Password" name="repassword">
 					            </div>
-					            <button type="submit" class="btn btn-success">Change Password</button>
+					            <button type="submit" class="btn btn-success btn-sm">Change Password</button>
 							</form>
 
 						</td>

@@ -21,3 +21,9 @@ class device(models.Model):
 	rw = models.SmallIntegerField(default=1)
 	def __str__(self):
 		return self.name
+
+class plan(models.Model):
+	name = models.CharField(blank=True, max_length=50)
+	owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	starting = models.DateTimeField(auto_now_add=True)
+	expiry = models.DateTimeField(null=True, blank=True)

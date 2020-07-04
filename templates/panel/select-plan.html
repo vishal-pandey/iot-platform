@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pay For services</title>
+</head>
+<body>
+	<h1>Pay For the Service</h1>
+	<h2>
+		Current Plan 
+		{% if plan == 'user' %}
+			FREE
+		{% elif plan == 'basic' %}
+			Basic
+		{% elif plan == 'ultimate' %}
+			Ultimate
+		{% endif %}
+	</h2>
+	<b class="price">2$</b>
+	<br><br>
+	<form method="post" action="/panel/pay/">
+		{% csrf_token %}
+		<select name="plan-name" class="plan-name" onchange="updatePrice()">
+			<option value="basic">Basic</option>
+			<option value="ultimate">Ultimate</option>
+		</select>
+		<select name="plan-duration" class="plan-duration" onchange="updatePrice()">
+			<option value="1m">1 Month</option>
+			<option value="3m">3 Months</option>
+			<option value="6m">6 Months</option>
+			<option value="1y">1 Year</option>
+		</select>
+		<input type="text" name="price" hidden="true" class="priceFinal" value="2">
+		<button type="submit">Pay</button>
+	</form>
+	<script type="text/javascript">
+
+		window.onload = ()=>{
+			updatePrice();
+		}
+
+		var totalPrice = 0;
+		function updatePrice(){
+			var planName = document.querySelector(".plan-name").value
+			var multiplier = 0;
+			var price = 0;
+			if (planName == "basic") {
+				multiplier = 2;
+			}else if(planName == "ultimate"){
+				multiplier = 10;
+			}
+			var planDuration = document.querySelector(".plan-duration").value
+			var duration = 0;
+			switch(planDuration){
+				case "1m":
+					duration = 1;
+					break;
+				case "3m":
+					duration = 3;
+					break;
+				case "6m":
+					duration = 6;
+					break;
+				case "1y":
+					duration = 12;
+					break;
+			}
+			totalPrice = multiplier * duration
+			document.querySelector(".price").innerText = totalPrice + "$";
+			document.querySelector(".priceFinal").value = totalPrice
+
+		}
+		
+	</script>
+</body>
+</html>

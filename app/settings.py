@@ -79,28 +79,28 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mqtt',
-#         'USER': 'root',
-#         'PASSWORD': '12345',
-#         'HOST': '127.0.0.1',
-#         'PORT': 3306
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'iotmqtt',
+        'NAME': 'mqtt',
         'USER': 'root',
-        'PASSWORD': '12345@ASDfg',
+        'PASSWORD': '12345',
         'HOST': '127.0.0.1',
         'PORT': 3306
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'iotmqtt',
+#         'USER': 'root',
+#         'PASSWORD': '12345@ASDfg',
+#         'HOST': '127.0.0.1',
+#         'PORT': 3306
+#     }
+# }
 
 
 
@@ -152,4 +152,7 @@ STATICFILES_DIRS = [STATIC_DIR,]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 CORS_ORIGIN_ALLOW_ALL = True
+
+STRIPE_SECRET_KEY = 'sk_test_51GzOrkGyc8rsAgg7JYSyTkzCBXcBwfiZZUZN7GaZEmQajNARVF5ozQp4ItMeV7cA9U1ApbB4VEmnYWgDVn3ddEr200JiXGZCy7'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51GzOrkGyc8rsAgg7nnTVJhJEHdVUjyRq9aDT1keBo8zqspDfuKBnyNPl5nlv9ic4QhJs6MMsz9jyy0pi85D5fJws002RN059uF'
 
