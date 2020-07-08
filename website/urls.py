@@ -16,5 +16,5 @@ urlpatterns=[
     # path('teacher', views.teacher, name='teacher'),
     path('support', views.support, name='support'),
     path('template', views.template, name='template'),
-    # path('privacy', views.ppolicy, name='privacy')
+    path('privacy', views.ppolicy, name='privacy'),
 ]

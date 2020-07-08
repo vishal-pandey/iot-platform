@@ -20,6 +20,7 @@ from django.contrib.auth.hashers import make_password
 import datetime
 from datetime import date, timedelta
 import calendar
+from dateutil.relativedelta import relativedelta
 
 
 
@@ -72,7 +73,7 @@ def apps(request):
 		maxdevice = 25
 	elif plan == 'ultimate':
 		maxapp = 20
-		maxdevice = 20
+		maxdevice = 200
 
 	context['maxapp'] = maxapp
 	context['maxdevice'] = maxdevice
@@ -346,8 +347,11 @@ def webhook(request):
 
 
     start_date = datetime.datetime.now()
-    days_in_month = calendar.monthrange(start_date.year, start_date.month)[int(duration)]
-    end_date = start_date + timedelta(days=days_in_month)
+
+    # days_in_month = calendar.monthrange(start_date.year, start_date.month)[int(duration)]
+    # end_date = start_date + timedelta(days=days_in_month)
+
+    end_date = start_date + relativedelta(months=+int(duration))
 
     plan.objects.filter(owner = w_user).delete()
     plan.objects.create(owner = w_user, expiry=end_date, name=userplan)

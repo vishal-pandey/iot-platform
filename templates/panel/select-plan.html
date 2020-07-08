@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Pay For services</title>
+	<title>Upgrade Airtrik Plan</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<h1>Pay For the Service</h1>
-	<h2>
-		Current Plan 
-		{% if plan == 'user' %}
-			FREE
-		{% elif plan == 'basic' %}
-			Basic
-		{% elif plan == 'ultimate' %}
-			Ultimate
-		{% endif %}
-	</h2>
-	<b class="price">2$</b>
-	<br><br>
-	<form method="post" action="/panel/pay/">
-		{% csrf_token %}
-		<select name="plan-name" class="plan-name" onchange="updatePrice()">
-			<option value="basic">Basic</option>
-			<option value="ultimate">Ultimate</option>
-		</select>
-		<select name="plan-duration" class="plan-duration" onchange="updatePrice()">
-			<option value="1m">1 Month</option>
-			<option value="3m">3 Months</option>
-			<option value="6m">6 Months</option>
-			<option value="1y">1 Year</option>
-		</select>
-		<input type="text" name="price" hidden="true" class="priceFinal" value="2">
-		<button type="submit">Pay</button>
-	</form>
+	<section class="container">
+		<section class="content">
+			<h1>Upgrade Plan</h1>
+			<h2>
+				Current Airtrik Plan 
+				{% if plan == 'user' %}
+					FREE
+				{% elif plan == 'basic' %}
+					Basic
+				{% elif plan == 'ultimate' %}
+					Ultimate
+				{% endif %}
+			</h2>
+			<b class="price">2$</b>
+			<form method="post" action="/panel/pay/">
+				{% csrf_token %}
+				<select name="plan-name" class="plan-name" onchange="updatePrice()">
+					<option value="basic">Basic</option>
+					<option value="ultimate">Ultimate</option>
+				</select>
+				<select name="plan-duration" class="plan-duration" onchange="updatePrice()">
+					<option value="1m">1 Month</option>
+					<option value="3m">3 Months</option>
+					<option value="6m">6 Months</option>
+					<option value="1y">1 Year</option>
+				</select>
+				<input type="text" name="price" hidden="true" class="priceFinal" value="2">
+				<button type="submit" class="pay-button">Pay</button>
+			</form>
+		</section>
+	</section>
+
 	<script type="text/javascript">
 
 		window.onload = ()=>{
@@ -69,7 +74,75 @@
 			document.querySelector(".priceFinal").value = totalPrice
 
 		}
-		
 	</script>
 </body>
 </html>
+<style type="text/css">
+*{
+	box-sizing: border-box;
+	font-family: sans-serif;
+	color: rgb(80, 80, 80);
+}
+body{
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+h1{
+	font-size: 33px;
+	margin: 0;
+}
+h2{
+	font-size: 20px;
+	margin: 0;
+}
+.container{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(245, 245, 245, 1);
+}
+.content{
+	width: 100%;
+	max-width: 600px;
+	padding: 20px;
+	/*border: 1px solid black;*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-color: white;
+	margin: 10px;
+	-webkit-box-shadow: 10px 10px 15px -15px rgba(66,66,66,1);
+	-moz-box-shadow: 10px 10px 15px -15px rgba(66,66,66,1);
+	box-shadow: 10px 10px 15px -15px rgba(66,66,66,1);
+	border-radius: 10px;
+}
+form{
+	width: 100%;
+	/*padding: 0px 20px;*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+select{
+	width: 100%;
+	height: 30px;
+	margin: 5px 0px;
+	outline: none;
+}
+.pay-button{
+	width: 100px;
+	height: 30px;
+}
+.price{
+	color: black;
+	font-size: 30px;
+}
+	
+</style>

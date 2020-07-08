@@ -72,7 +72,7 @@
 
 								<!-- <span class="badge badge-pill badge-info p-2 px-3">{{topic.name}}</span> -->
 							{% endfor %}
-							{% if devicecount != maxdevice %}
+							{% if devicecount < maxdevice %}
 							<button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#exampleModalCenter_{{app.key}}">Add</button>
 							<div class="modal fade" id="exampleModalCenter_{{app.key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
 							  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -154,7 +154,7 @@
 				{% endfor %}
 			</table>
 
-			{% if appcount != maxapp %}
+			{% if appcount < maxapp %}
 			<button class="btn btn-outline-success btn-lg btn-block" type="button" data-toggle="modal" data-target="#addApp" style="margin-top: 20px;">Create App</button>
 			<div class="modal fade" id="addApp" tabindex="-1" role="dialog" aria-labelledby="addAppTitle" aria-hidden="true">
 			  <div class="modal-dialog modal-dialog-centered" role="document">

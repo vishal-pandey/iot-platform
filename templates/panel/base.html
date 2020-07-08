@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>IOTC | IoT Connect | Connting IoT devices made easy </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700&display=swap" rel="stylesheet">
 
     {% load static %}
+
+    <title>Airtrik | IoT Cloud | Connecting IoT devices made easy</title>
+    <meta name="title" content="Airtrik | IoT Cloud | Connecting IoT devices made easy">
+    <meta name="description" content="AirTrik is a cloud platform to build real-time IoT solution integrated with all major software development frameworks and supported by all major languages.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://airtrik.com/">
+    <meta property="og:title" content="Airtrik | IoT Cloud | Connecting IoT devices made easy">
+    <meta property="og:description" content="AirTrik is a cloud platform to build real-time IoT solution integrated with all major software development frameworks and supported by all major languages.">
+    <meta property="og:image" content="{% static 'website/images/meta-image.png' %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://airtrik.com/">
+    <meta property="twitter:title" content="Airtrik | IoT Cloud | Connecting IoT devices made easy">
+    <meta property="twitter:description" content="AirTrik is a cloud platform to build real-time IoT solution integrated with all major software development frameworks and supported by all major languages.">
+    <meta property="twitter:image" content="{% static 'website/images/meta-image.png' %}">
+
 
     <link rel="stylesheet" href="{% static 'panel/css/open-iconic-bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'panel/css/animate.css' %}">
@@ -62,12 +80,12 @@
 		  </div>
 	  </nav> -->
 
-    <div class="px-0 bg-info navbar-wrap">
+    <div class="px-0 bg-info navbar-wrap" style="background-color: #4a2bce!important;">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
               <nav class="navbar px-0 navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="/panel/">IOT Admin</a>
+                <a class="navbar-brand" href="/panel/"><img src="{% static 'website/images/airtrik-logo-dark.png' %}" class="img-fluid logo" alt="img" style="height: 40px;"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="oi oi-menu"></span>
                 </button>

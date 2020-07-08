@@ -33,3 +33,6 @@ def support(request):
 
 def template(request):
 	return render(request, 'website/template.html')
+
+def ppolicy(request):
+	return render(request, 'website/privacy.html')

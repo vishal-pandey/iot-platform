@@ -107,7 +107,7 @@
 			tosend = new FormData();
 			tosend.append('key', '{{key}}')
 
-			apiEndPoint = 'https://iot.softwaremakeinindia.com/iot/'
+			apiEndPoint = 'https://airtrik.com/iot/'
 			// apiEndPoint = 'http://127.0.0.1:8000/iot/'
 
 			fetch(apiEndPoint, {
@@ -145,7 +145,7 @@
 
 					
 					// Connect to mqtt server
-					client = new Paho.MQTT.Client('iot.softwaremakeinindia.com', 8083, "clientId");
+					client = new Paho.MQTT.Client('airtrik.com', 8083, "clientId");
 					// console.log(client)
 
 								// set callback handlers
@@ -220,6 +220,13 @@
 
 			document.querySelector(".clear-message").onclick = ()=>{
 				document.querySelector("table tbody").innerHTML = ""
+			}
+
+
+			document.querySelector("input#message").onkeypress = (e)=>{
+				if (e.key == 'Enter') {
+					send()					
+				}
 			}
 
 
