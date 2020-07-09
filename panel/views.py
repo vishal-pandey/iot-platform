@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from website.models import Subscribe, ContactUs
 from django.urls import reverse
-from iot.models import iotApp, device, plan
-
+from iot.models import iotApp, device, plan, apiKey
 
 from django.contrib.auth import authenticate, login as userlogin, logout
 from django.contrib.auth.decorators import login_required
@@ -30,20 +29,17 @@ def index(request):
 	else:
 	    return HttpResponseRedirect('/panel/login/')
 
-
 def login(request):
 	if request.user.is_authenticated:
 	    return HttpResponseRedirect('/panel')
 	else:
 		return render(request, 'panel/login.html')
-	
 
 def signup(request):
 	if request.user.is_authenticated:
 	    return HttpResponseRedirect('/panel')
 	else:
 		return render(request, 'panel/signup.html')
-
 
 def apps(request):
 	if not request.user.is_authenticated:
@@ -80,7 +76,13 @@ def apps(request):
 
 	return render(request, 'panel/apps.html', context)
 
-
+def api(request):
+	context = {}
+	try:
+		context['apiKey'] = list(apiKey.objects.filter(owner=request.user).values('key'))[0]['key']
+	except Exception as e:
+		context['apiKey'] = "No Key Found"
+	return render(request, 'panel/api.html', context)
 
 def devices(request):
 	if not request.user.is_authenticated:
@@ -124,6 +126,7 @@ def devices(request):
 			name = request.POST['device_id']
 			username = request.POST['username']
 			username = iotApp.objects.get(username = username)
+			# Potential Bug (User Can set key parameter themselve)
 			key = request.POST['key']
 			topic = key+"/"+name+"/#"
 			if maxdevice >= devicecount:
@@ -156,10 +159,6 @@ def devices(request):
 	# res = {'error': 'Method Not Supported'}
 	# return HttpResponse(json.dumps(res), content_type="application/json")
 
-
-
-
-
 def account(request):
 	if not request.user.is_authenticated:
 	    return HttpResponseRedirect('/panel/login/')
@@ -182,9 +181,6 @@ def account(request):
 				context['password_changed'] = True
 	return render(request, 'panel/account.html', context)
 
-
-
-
 def deviceConnect(request):
 	if not request.user.is_authenticated:
 	    return HttpResponseRedirect('/panel/login/')
@@ -194,14 +190,11 @@ def deviceConnect(request):
 		context['key'] = key
 	return render(request, 'panel/connect.html', context)
 
-
-
 def userlogout(request):
 	if request.user.is_authenticated:
 		logout(request)
 		
 	return HttpResponseRedirect('/panel')
-
 
 def selectPlan(request):
 	if not request.user.is_authenticated:
@@ -250,7 +243,6 @@ def pay(request):
 
 		context['clientSecret'] = intent.client_secret
 		return render(request, 'panel/pay.html', context)
-
 
 def signuplogin(request):
 	try:
@@ -302,6 +294,8 @@ def signuplogin(request):
 				user.is_staff = True
 				user.save()
 				plan.objects.create(name="user", owner=user)
+				user_api_key = uuid.uuid4()
+				apiKey.objects.create(owner=user, key=user_api_key)
 				userlogin(request, user)
 				return HttpResponseRedirect(redir)
 
@@ -314,11 +308,6 @@ def signuplogin(request):
 			return HttpResponseRedirect(reverse('panel:panel-home'))
 		else:
 			return render(request, 'website/signuplogin.html', {'next': redir})
-
-
-
-
-
 
 @csrf_exempt
 def webhook(request):
@@ -377,10 +366,5 @@ def webhook(request):
     return HttpResponse(status=400)
 
   return HttpResponse(status=200)
-
-
-
-
-
 
 

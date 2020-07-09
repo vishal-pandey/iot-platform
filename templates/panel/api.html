@@ -1,0 +1,58 @@
+{% extends "panel/base.html" %}
+{% block body_block %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+<section class="ftco-section" style="min-height: 90vh;">
+	<div class="container">
+		<div class="row mb-12 justify-content-center">
+			<h1 style="width: 100%; text-align: center;">Api Management</h1>
+			<div class="col-sm-6">
+				<div class="form-group" style="width: 100%;">
+		          <div class="input-group">
+		            <input type="text" class="form-control" value="{{apiKey}}">
+		            <div class="input-group-prepend copy-api-key" data-clipboard-text="{{apiKey}}">
+		              <span class="input-group-text border-left-0 rounded-right">
+		                <i class="ion-ios-copy"></i>
+		              </span>
+		            </div>
+		          </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript">
+	var clipboard = new ClipboardJS('.copy-api-key');
+
+	clipboard.on('success', function(e) {
+	    console.info('Action:', e.action);
+	    console.info('Text:', e.text);
+	    console.info('Trigger:', e.trigger);
+
+	    e.clearSelection();
+	});
+
+	clipboard.on('error', function(e) {
+	    console.error('Action:', e.action);
+	    console.error('Trigger:', e.trigger);
+	});
+
+	var clipboard1 = new ClipboardJS('.device-copy');
+
+	clipboard1.on('success', function(e) {
+	    console.info('Action:', e.action);
+	    console.info('Text:', e.text);
+	    console.info('Trigger:', e.trigger);
+
+	    e.clearSelection();
+	});
+
+	clipboard1.on('error', function(e) {
+	    console.error('Action:', e.action);
+	    console.error('Trigger:', e.trigger);
+	});
+</script>
+
+{% endblock %}

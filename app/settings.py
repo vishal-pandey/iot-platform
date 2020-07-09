@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'iot',
     'panel',
     'corsheaders',
+    'api',
 ]
 
 MIDDLEWARE = [
