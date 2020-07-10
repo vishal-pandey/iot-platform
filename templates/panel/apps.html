@@ -13,7 +13,7 @@
 			</div>
 			<table style="width: 100%;" border="1">
 				<tr>
-					<th>Name</th>
+					<th style="text-align: center;">Name</th>
 					<th>Secret Key</th>
 					<th>Devices</th>
 					<th>Actions</th>
@@ -148,6 +148,14 @@
 							    <button class="btn btn-info btn-sm" type="submit" style="margin-top: 5px;">Connect</button>
 						  		
 						  	</form>
+						  	
+						  	<form method="post" action="/panel/logs/" style="display: inline;">
+						  		{% csrf_token %}
+						  		<input type="text" name="key" value="{{app.key}}" hidden="true">
+							    <button class="btn btn-info btn-sm" type="submit" style="margin-top: 5px;">Logs</button>
+						  		
+						  	</form>
+
 
 						</td>
 					</tr>

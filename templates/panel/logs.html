@@ -1,0 +1,42 @@
+{% extends "panel/base.html" %}
+{% block body_block %}
+{% load static %}
+<section class="ftco-section" style="min-height: 90vh;">
+	<div class="container">
+		<div class="row mb-12 justify-content-center">
+			<h1 style="width: 100%; text-align: center;">{{appname}} Logs</h1>
+			
+			<div class="col-sm-8">
+				<table style="width: 100%;" border="1" class="record-table">
+					<thead>									
+						<tr>
+							<th>Device</th>
+							<th>Data</th>
+							<th>Timestamp</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for log in logs %}
+							<tr>
+								<td>{{log.deviceid}}</td>
+								<td>{{log.message}}</td>
+								<td>{{log.timestamp}}</td>
+							</tr>
+						{% endfor %}		
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-8">
+				<p>
+					<b>*note :- </b> timestamp is in UTC convert to your timezone accordingly.
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+<style type="text/css">
+	th, td{
+		text-align: center;
+	}
+</style>
+{% endblock %}

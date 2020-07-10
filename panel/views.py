@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from website.models import Subscribe, ContactUs
 from django.urls import reverse
-from iot.models import iotApp, device, plan, apiKey
+from iot.models import iotApp, device, plan, apiKey, deviceLog
 
 from django.contrib.auth import authenticate, login as userlogin, logout
 from django.contrib.auth.decorators import login_required
@@ -20,6 +20,7 @@ import datetime
 from datetime import date, timedelta
 import calendar
 from dateutil.relativedelta import relativedelta
+from djqscsv import render_to_csv_response
 
 
 
@@ -189,6 +190,35 @@ def deviceConnect(request):
 		key = request.POST['key']
 		context['key'] = key
 	return render(request, 'panel/connect.html', context)
+
+def logs(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
+	context = {}
+	if request.method == 'POST':
+		try:
+			key = request.POST['key']
+			app_log = list(deviceLog.objects.filter(app_key=key).order_by('-id').values('deviceid', 'message', 'timestamp')[:100])
+			context['logs'] = app_log
+			appname = list(iotApp.objects.filter(key=key).values('name'))[0]['name']
+			context['appname'] = appname
+			context['key'] = key
+		except Exception as e:
+			raise e
+	return render(request, 'panel/logs.html', context)
+
+def logsDownload(request):
+	if not request.user.is_authenticated:
+	    return HttpResponseRedirect('/panel/login/')
+	context = {}
+	if request.method == 'POST':
+		try:
+			key = request.POST['key']
+			appname = list(iotApp.objects.filter(key=key).values('name'))[0]['name']
+			app_log = deviceLog.objects.filter(app_key=key).order_by('-id').values('deviceid', 'message', 'timestamp')
+		except Exception as e:
+			raise e
+	return render_to_csv_response(app_log, filename=appname+"__"+str(datetime.datetime.now())+".csv")
 
 def userlogout(request):
 	if request.user.is_authenticated:

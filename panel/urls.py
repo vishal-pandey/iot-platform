@@ -18,5 +18,7 @@ urlpatterns=[
     path('select-plan/', views.selectPlan, name='panel-select-plan'),
     path('pay/', views.pay, name='panel-pay'),
     path('webhook/', views.webhook, name='webhook'),
+    path('logs/', views.logs, name='logs'),
+    path('logs/download/', views.logsDownload, name='logs'),
 
 ]

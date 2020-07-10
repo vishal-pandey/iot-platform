@@ -68,6 +68,12 @@
 							  </div>
 							</div>
 
+							<form method="post" action="/panel/logs/" style="display: inline;">
+						  		{% csrf_token %}
+						  		<input type="text" name="key" value="{{key}}" hidden="true">
+							    <button class="btn btn-info" type="submit" style="margin-top: 5px;">Logs</button>
+						  		
+						  	</form>
 
 
 						</div>

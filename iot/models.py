@@ -29,3 +29,11 @@ class plan(models.Model):
 class apiKey(models.Model):
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	key = models.CharField(blank=True, max_length=255, null=True, unique=True)
+
+class deviceLog(models.Model):
+	app_key = models.CharField("app_key", blank=True, max_length=255)
+	deviceid = models.CharField("deviceid", blank=True, max_length=255)
+	message = models.CharField("message", blank=True, max_length=255)
+	timestamp = models.CharField("timestamp", blank=True, max_length=255)
+
+
