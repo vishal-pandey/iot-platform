@@ -7,3 +7,4 @@ sqlparse==0.3.1
 stripe
 python-dateutil
 django-queryset-csv
+social-auth-app-django
