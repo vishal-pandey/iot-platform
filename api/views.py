@@ -5,9 +5,11 @@ import json
 import uuid
 from django.conf import settings
 
-from iot.models import iotApp, device, plan, apiKey
+from iot.models import iotApp, device, plan, apiKey, deviceLog
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from djqscsv import render_to_csv_response
+import datetime
 
 def error(msg):
 	return {"error": msg}
@@ -190,6 +192,48 @@ def devices(request, k=""):
 		return JsonResponse(res)
 	else:
 		return checkKey(request)
+
+@csrf_exempt
+def logs(request):
+	if request.method == 'POST':
+		try:
+			key = request.POST['key']
+			appname = list(iotApp.objects.filter(key=key).values('name'))[0]['name']
+			app_log = deviceLog.objects.filter(app_key=key).order_by('-id').values('deviceid', 'message', 'timestamp')
+		except Exception as e:
+			raise e
+		return render_to_csv_response(app_log, filename=appname+"__"+str(datetime.datetime.now())+".csv")
+	else:
+		return JsonResponse(error("Method Not Allowed"))
+
+@csrf_exempt
+def lastmsg(request):
+	if request.method == 'POST':
+		res = {}
+		try:
+			try:
+				key = request.POST['key']
+			except Exception as e:
+				return JsonResponse(error("key and deivceid is required parameter"))
+			temp = list(iotApp.objects.filter(key=key).values('name', 'username'))
+			appname = temp[0]['name']
+			username = temp[0]['username']
+			devices = list(device.objects.filter(username=username).values('name'))
+			data = []
+			for dev in devices:
+				dev = dev['name']
+				log = deviceLog.objects.filter(app_key=key, deviceid=dev).order_by('-id').values('deviceid', 'message', 'timestamp')
+				if len(log) > 0:
+					data.append(log[0])
+			res['appname'] = appname
+			res['data'] = data
+		except Exception as e:
+			return JsonResponse(error("Either Key is wrong or Something unexpected happened"))
+		return JsonResponse(res)
+	else:
+		return JsonResponse(error("Method Not Allowed"))
+
+
 
 apps_options = {
 	"options": [

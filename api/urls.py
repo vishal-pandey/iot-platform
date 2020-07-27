@@ -10,5 +10,7 @@ urlpatterns=[
     path('apps/<k>/', views.apps, name='apps'),
     path('devices/', views.devices, name='devices'),
     path('devices/<k>/', views.devices, name='devices'),
+    path('logs/', views.logs, name='logs'),
+    path('lastmsg/', views.lastmsg, name='lastmsg')
 
 ]
