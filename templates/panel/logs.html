@@ -28,8 +28,21 @@
 			</div>
 			<div class="col-sm-8">
 				<p>
-					<b>*note :- </b> timestamp is in UTC convert to your timezone accordingly.
+					<b>*note 1 :- </b> timestamp is in UTC convert to your timezone accordingly. <br>
+					<b>*note 2 :- </b> only last 100 logs are displayed here, download the csv file for full logs.
 				</p>
+				<form method="post" action="/panel/connect/" style="display: inline;">
+			  		{% csrf_token %}
+			  		<input type="text" name="key" value="{{key}}" hidden="true">
+				    <button class="btn btn-info btn-sm" type="submit" style="margin-top: 5px;">Connect</button>
+			  		
+			  	</form>
+				<form method="post" action="/panel/logs/download/" style="display: inline;">
+			  		{% csrf_token %}
+			  		<input type="text" name="key" value="{{key}}" hidden="true">
+				    <button class="btn btn-info btn-sm" type="submit" style="margin-top: 5px;">Download csv</button>
+			  		
+			  	</form>
 			</div>
 		</div>
 	</div>

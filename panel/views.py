@@ -321,12 +321,12 @@ def signuplogin(request):
 				
 				group = Group.objects.get(name='user')
 				user.groups.add(group)
-				user.is_staff = True
+				user.is_staff = False
 				user.save()
 				plan.objects.create(name="user", owner=user)
 				user_api_key = uuid.uuid4()
 				apiKey.objects.create(owner=user, key=user_api_key)
-				userlogin(request, user)
+				userlogin(request, user, backend='django.contrib.auth.backends.ModelBackend')
 				return HttpResponseRedirect(redir)
 
 
