@@ -5,9 +5,15 @@
 	<div class="container">
 		<div class="row mb-12">
 			<h1 style="width: 100%; text-align: center;">Apps and Devices</h1>
+			<div class="alert alert-secondary col-sm-6" role="alert">
+			  <b>Apps limit : </b> {{appcount}} / {{maxapp}}
+			</div>
+			<div class="alert alert-secondary col-sm-6" role="alert">
+			  <b>Devices limit : </b> {{devicecount}} / {{maxdevice}}
+			</div>
 			<table style="width: 100%;" border="1">
 				<tr>
-					<th>Name</th>
+					<th style="text-align: center;">Name</th>
 					<th>Secret Key</th>
 					<th>Devices</th>
 					<th>Actions</th>
@@ -66,8 +72,8 @@
 
 								<!-- <span class="badge badge-pill badge-info p-2 px-3">{{topic.name}}</span> -->
 							{% endfor %}
+							{% if devicecount < maxdevice %}
 							<button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#exampleModalCenter_{{app.key}}">Add</button>
-
 							<div class="modal fade" id="exampleModalCenter_{{app.key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
 							  <div class="modal-dialog modal-dialog-centered" role="document">
 							    <div class="modal-content">
@@ -101,6 +107,7 @@
 							    </div>
 							  </div>
 							</div>
+							{% endif %}
 						</td>
 						<td>
 							<button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#deleteApp_{{app.key}}">Delete</button>
@@ -141,12 +148,21 @@
 							    <button class="btn btn-info btn-sm" type="submit" style="margin-top: 5px;">Connect</button>
 						  		
 						  	</form>
+						  	
+						  	<form method="post" action="/panel/logs/" style="display: inline;">
+						  		{% csrf_token %}
+						  		<input type="text" name="key" value="{{app.key}}" hidden="true">
+							    <button class="btn btn-info btn-sm" type="submit" style="margin-top: 5px;">Logs</button>
+						  		
+						  	</form>
+
 
 						</td>
 					</tr>
 				{% endfor %}
 			</table>
 
+			{% if appcount < maxapp %}
 			<button class="btn btn-outline-success btn-lg btn-block" type="button" data-toggle="modal" data-target="#addApp" style="margin-top: 20px;">Create App</button>
 			<div class="modal fade" id="addApp" tabindex="-1" role="dialog" aria-labelledby="addAppTitle" aria-hidden="true">
 			  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -176,6 +192,7 @@
 			    </div>
 			  </div>
 			</div>
+			{% endif %}
 		</div>
 	</div>
 </section>

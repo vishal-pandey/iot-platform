@@ -5,8 +5,33 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Software Make In India</title>
+
         {% load static %}
+
+        <!-- Seo Tags -->
+        <!-- Primary Meta Tags -->
+        <title>Airtrik | IoT Cloud | Connecting IoT devices made easy</title>
+        <meta name="title" content="Airtrik | IoT Cloud | Connecting IoT devices made easy">
+        <meta name="description" content="AirTrik is a cloud platform to build real-time IoT solution integrated with all major software development frameworks and supported by all major languages.">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://airtrik.com/">
+        <meta property="og:title" content="Airtrik | IoT Cloud | Connecting IoT devices made easy">
+        <meta property="og:description" content="AirTrik is a cloud platform to build real-time IoT solution integrated with all major software development frameworks and supported by all major languages.">
+        <meta property="og:image" content="{% static 'website/images/meta-image.png' %}">
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://airtrik.com/">
+        <meta property="twitter:title" content="Airtrik | IoT Cloud | Connecting IoT devices made easy">
+        <meta property="twitter:description" content="AirTrik is a cloud platform to build real-time IoT solution integrated with all major software development frameworks and supported by all major languages.">
+        <meta property="twitter:image" content="{% static 'website/images/meta-image.png' %}">
+
+
+
+
+        
         <link rel="stylesheet" href="{% static 'website/css/bootstrap.min.css' %}">
         <!-- Magnific Popup -->
         <link rel="stylesheet" href="{% static 'website/css/magnific-popup.css' %}"/>
@@ -32,10 +57,10 @@
                     <div class="col-sm-12">
                         <nav class="navbar navbar-expand-lg navbar-light">
                             <a class="navbar-brand" href="/">
-                                <!-- <img src="{% static 'website/images/logo.png' %}" class="img-fluid logo" alt="img">
-                                <img src="{% static 'website/images/logo-white.png' %}" class="img-fluid logo-white" alt="img"> -->
-                                <span style="color: white; font-size: 30px; font-weight: bolder;" class="logo">IOTC</span>
-                                <span style="color: black; font-size: 30px; font-weight: bolder;" class="logo-white">IOTC</span>
+                                <img src="{% static 'website/images/airtrik-logo-dark.png' %}" class="img-fluid logo" alt="img">
+                                <img src="{% static 'website/images/airtrik-logo-white.png' %}" class="img-fluid logo-white" alt="img">
+                                <!-- <span style="color: white; font-size: 30px; font-weight: bolder;" class="logo">IOTC</span>
+                                <span style="color: black; font-size: 30px; font-weight: bolder;" class="logo-white">IOTC</span> -->
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -48,9 +73,15 @@
                                     <li class="nav-item {% if request.resolver_match.url_name == 'pricing' %}active{% endif %}">
                                         <a class="nav-link" href="/pricing">Pricing</a>
                                     </li>
-                                    <li class="nav-item {% if request.resolver_match.url_name == 'documentation' %}active{% endif %}">
-                                        <a class="nav-link" href="/documentation">Documentation</a>
+                                    
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="https://docs.airtrik.com/">Documentation</a>
                                     </li>
+
+                                    <!-- <li class="nav-item {% if request.resolver_match.url_name == 'documentation' %}active{% endif %}">
+                                        <a class="nav-link" href="/documentation">Documentation</a>
+                                    </li> -->
+
                                     <li class="nav-item {% if request.resolver_match.url_name == 'support' %}active{% endif %}">
                                         <a class="nav-link" href="/support">Support</a>
                                     </li>
@@ -119,8 +150,8 @@
                             </form>
                             <span class="text-white d-inline">Follow Us :</span>
                             <ul class="info-share d-inline">
-                                <li><a href="https://fb.me/softwaremakeinindia"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="https://www.linkedin.com/company/softwaremakeinindia/"><i class="fab fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
                             </ul>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 ">
@@ -129,7 +160,7 @@
                                 <ul class="iq-contact text-white">
                                     <li>
                                         <i class="fas fa-envelope"></i>
-                                        <p>softwaremakeinindia@gmail.com</p>
+                                        <p>hello@airtrik.com</p>
                                     </li>
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
@@ -140,7 +171,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 ">
                             <div class="logo iq-rmt-30">
-                                <a href="/"><img src="{% static 'website/images/logo.png' %}" class="img-fluid" alt="img"></a>
+                                <a href="/"><img src="{% static 'website/images/airtrik-logo-dark.png' %}" class="img-fluid" alt="img"></a>
                                 <p class="mt-3 text-white">IOT communication made easy</p>
                                 <!-- <div class="mt-3 text-white link">Developed by Vishal Pandey </div> -->
                             </div>
@@ -168,45 +199,10 @@
         <script src="{% static 'website/js/popper.min.js' %}"></script>
         <!-- bootstrap -->
         <script src="{% static 'website/js/bootstrap.min.js' %}"></script>
-        <!-- chatbot -->
-        <script src="{% static 'website/js/chatbot.js' %}"></script>
-        <!-- countdown -->
-        <script src="{% static 'website/js/countdown.js' %}"></script>
-        <!-- Magnific-popup JavaScript -->
-        <script src="{% static 'website/js/jquery.magnific-popup.min.js' %}"></script>
-        <!-- Owl Carousel -->
-        <script src="{% static 'website/js/owl.carousel.min.js' %}"></script>
         <!-- Wow -->
         <script src="{% static 'website/js/wow.min.js' %}"></script>
-        <!-- jquery.countTo -->
-        <script src="{% static 'website/js/counto.js' %}"></script>
         <!--custom -->
         <script src="{% static 'website/js/custom.js' %}"></script>
 
-
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168610462-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'UA-168610462-1');
-        </script>
-
-
-        <!--Start of Tawk.to Script-->
-        <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/5ed889774a7c62581799e1bd/default';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-        })();
-        </script>
-        <!--End of Tawk.to Script-->
     </body>
 </html>

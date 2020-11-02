@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Structure - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Airtrik | IoT Cloud | Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -43,14 +43,8 @@
                 <div class="card-header card-header-primary text-center">
                   <h4 class="card-title">IOT Login</h4>
                   <div class="social-line">
-                    <a href="#" class="btn-icon d-flex align-items-center justify-content-center">
-                      <i class="ion-logo-facebook"></i>
-                    </a>
-                    <a href="#" class="btn-icon d-flex align-items-center justify-content-center">
-                      <i class="ion-logo-twitter"></i>
-                    </a>
-                    <a href="#" class="btn-icon d-flex align-items-center justify-content-center">
-                      <i class="ion-logo-googleplus"></i>
+                    <a href="{% url 'social:begin' 'github' %}" class="btn-icon d-flex align-items-center justify-content-center">
+                      <i class="ion-logo-github"></i>
                     </a>
                   </div>
                 </div>
@@ -78,7 +72,7 @@
                         <i class="ion-ios-paper-plane"></i>
                       </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Username" name="username">
+                    <input type="email" class="form-control" placeholder="Email" name="username">
                   </div>
                   <div class="input-group mb-0">
                     <div class="input-group-prepend">

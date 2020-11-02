@@ -17,11 +17,16 @@
 					<div class="row">
 						<div class="recieving col-sm-6">
 							<table style="width: 100%;" border="1" class="record-table">
-								<tr>
-									<th>Device</th>
-									<th>Data</th>
-									<th>Time</th>
-								</tr>
+								<thead>									
+									<tr>
+										<th>Device</th>
+										<th>Data</th>
+										<th>Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
 							</table>
 						</div>
 						<div class="sending col-sm-6">
@@ -34,6 +39,43 @@
 				              	<input type="text" class="form-control" id="message" placeholder="Message" name="message">
 				            </div>
 				            <button class="btn btn-success send-message">Send</button>
+				            <button class="btn btn-success clear-message">Clear</button>
+
+				            <span class="btn btn-success secret-scan" style="cursor: pointer;" data-toggle="modal" data-target="#key_scan_modal"><i class="ion-ios-barcode mr-1" style="font-size: 16px;"></i></span>
+
+							<div class="modal fade" id="key_scan_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLongTitle">Scan App Key</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" style="display: flex; align-items: center; justify-content: center;">
+								    	<div id="qrcode"></div>
+										<script type="text/javascript">
+											
+											console.log("hello");
+											new QRCode(document.getElementById("qrcode"), "{{key}}");
+											
+										</script>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+
+							<form method="post" action="/panel/logs/" style="display: inline;">
+						  		{% csrf_token %}
+						  		<input type="text" name="key" value="{{key}}" hidden="true">
+							    <button class="btn btn-info" type="submit" style="margin-top: 5px;">Logs</button>
+						  		
+						  	</form>
+
+
 						</div>
 					</div>
 				</div>
@@ -71,7 +113,7 @@
 			tosend = new FormData();
 			tosend.append('key', '{{key}}')
 
-			apiEndPoint = 'https://iot.softwaremakeinindia.com/iot/'
+			apiEndPoint = 'https://airtrik.com/iot/'
 			// apiEndPoint = 'http://127.0.0.1:8000/iot/'
 
 			fetch(apiEndPoint, {
@@ -109,7 +151,7 @@
 
 					
 					// Connect to mqtt server
-					client = new Paho.MQTT.Client('iot.softwaremakeinindia.com', 8083, "clientId");
+					client = new Paho.MQTT.Client('airtrik.com', 8083, "clientId");
 					// console.log(client)
 
 								// set callback handlers
@@ -157,7 +199,7 @@
 			  // console.log(rcvddata)
 			  // console.log(device)
 			  
-			  var tb = document.querySelector("table")
+			  var tb = document.querySelector("table tbody") 
 			  row = tb.insertRow()
 			  var currentdate = new Date(); 
 			  row.insertCell(0).innerHTML = device
@@ -181,6 +223,19 @@
 				// console.log("Sending...")
 				send()
 			}
+
+			document.querySelector(".clear-message").onclick = ()=>{
+				document.querySelector("table tbody").innerHTML = ""
+			}
+
+
+			document.querySelector("input#message").onkeypress = (e)=>{
+				if (e.key == 'Enter') {
+					send()					
+				}
+			}
+
+
 
 		}
 	</script>

@@ -20,12 +20,17 @@ from django.conf.urls import url,include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'', include('website.urls')),
     url('iot/', include('iot.urls')),
     url('panel/', include('panel.urls')),
+    url('api/', include('api.urls')),
+    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path('', include('social_django.urls', namespace="social")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = 'IOT Admin'

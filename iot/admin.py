@@ -1,5 +1,5 @@
 from django.contrib import admin
-from iot.models import iotApp, device
+from iot.models import iotApp, device, plan, apiKey
 import uuid
 import os
 from django.contrib.auth.hashers import make_password
@@ -78,4 +78,15 @@ class iotAppAdmin(admin.ModelAdmin):
 
 
 
+
+class planAdmin(admin.ModelAdmin):
+	model = plan
+	list_display = ['name', 'owner', 'starting', 'expiry']
+
+class apiKeyAdmin(admin.ModelAdmin):
+	model = apiKey
+	list_display = ['owner', 'key']
+
 admin.site.register(iotApp, iotAppAdmin)
+admin.site.register(plan, planAdmin)
+admin.site.register(apiKey, apiKeyAdmin)

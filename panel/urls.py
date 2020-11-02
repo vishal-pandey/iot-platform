@@ -14,5 +14,11 @@ urlpatterns=[
     path('account/', views.account, name='panel-account'),
     path('logout/', views.userlogout, name='panel-logout'),
     path('connect/', views.deviceConnect, name='panel-device-connect'),
+    path('api/', views.api, name='panel-api'),
+    path('select-plan/', views.selectPlan, name='panel-select-plan'),
+    path('pay/', views.pay, name='panel-pay'),
+    path('webhook/', views.webhook, name='webhook'),
+    path('logs/', views.logs, name='logs'),
+    path('logs/download/', views.logsDownload, name='logs'),
 
 ]
