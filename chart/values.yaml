@@ -1,0 +1,14 @@
+apiVersion: v1
+replicaCount: 1
+name: airtrik
+image: ghcr.io/vishal-pandey/iot-platform:latest
+gateway: "vishal-gateway"
+host: "'airtrik.com'"
+configMapData:
+  HOST: '0.0.0.0'
+  PORT: '8085'
+  DATABASE_HOST: 'mysql.default.svc.cluster.local'
+  DATABASE_PORT: '3306'
+  DATABASE_USER: root
+  DATABASE_PASSWORD: 12345@ASDfg
+  DATABASE_NAME: airtrik

@@ -21,4 +21,4 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirement1.txt
 # RUN pip install --upgrade --user urllib3
 # RUN pip install --upgrade --user six
 ADD . /airtrik/
-ENTRYPOINT [ "python3", "manage.py", "runserver", "0.0.0.0:8080" ]
+ENTRYPOINT [ "python3", "manage.py", "runserver", "0.0.0.0:8085" ]
